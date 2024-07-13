@@ -52,7 +52,7 @@ public class SplashActivity extends AppCompatActivity {
                                 soundPlayer = new SoundPlayer(getApplicationContext());
                                 soundPlayer.playSound(R.raw.ca_ching);
                             }
-                        }, 800); // 800 milliseconds delay (1 second) after animation starts
+                        }, 800); // 800 milliseconds delay 800 milliseconds after animation starts
                     }
 
                     @Override
