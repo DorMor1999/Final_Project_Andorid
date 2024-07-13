@@ -3,6 +3,7 @@ package com.example.android_final_project;
 import android.animation.Animator;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.TextView;
@@ -11,9 +12,12 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatImageView;
 
+import com.example.android_final_project.Utilities.SoundPlayer;
+
 public class SplashActivity extends AppCompatActivity {
     private AppCompatImageView splash_IMG_logo;
     private TextView splash_title;
+    private SoundPlayer soundPlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,11 +44,19 @@ public class SplashActivity extends AppCompatActivity {
                 .setListener(new Animator.AnimatorListener() {
                     @Override
                     public void onAnimationStart(@NonNull Animator animation) {
-                        //pass
+                        // Delayed initialization and sound play
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                soundPlayer = new SoundPlayer(getApplicationContext());
+                                soundPlayer.playSound(R.raw.ca_ching);
+                            }
+                        }, 800); // 800 milliseconds delay (1 second) after animation starts
                     }
 
                     @Override
                     public void onAnimationEnd(@NonNull Animator animation) {
+                        soundPlayer.stopSound();
                         moveToAuthActivity();
                     }
 
