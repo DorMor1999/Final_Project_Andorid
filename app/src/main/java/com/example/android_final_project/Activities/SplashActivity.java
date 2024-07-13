@@ -1,4 +1,4 @@
-package com.example.android_final_project;
+package com.example.android_final_project.Activities;
 
 import android.animation.Animator;
 import android.content.Intent;
@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatImageView;
 
+import com.example.android_final_project.R;
 import com.example.android_final_project.Utilities.SoundPlayer;
 
 public class SplashActivity extends AppCompatActivity {
@@ -40,7 +41,7 @@ public class SplashActivity extends AppCompatActivity {
                 .alpha(1.0f)
                 .scaleX(1.0f)
                 .scaleY(1.0f)
-                .setDuration(3000)
+                .setDuration(3500)
                 .setListener(new Animator.AnimatorListener() {
                     @Override
                     public void onAnimationStart(@NonNull Animator animation) {
@@ -89,7 +90,7 @@ public class SplashActivity extends AppCompatActivity {
                 .scaleX(1.0f)
                 .scaleY(1.0f)
                 .translationY(0)
-                .setDuration(3000)
+                .setDuration(3500)
                 .setListener(new Animator.AnimatorListener() {
                     @Override
                     public void onAnimationStart(@NonNull Animator animation) {
