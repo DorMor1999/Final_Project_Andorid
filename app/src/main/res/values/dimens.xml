@@ -3,4 +3,6 @@
     <dimen name="margin_top_title_splash">100dp</dimen>
     <dimen name="title_splash_text_size">40sp</dimen>
     <dimen name="logo_splash_w_and_h">200dp</dimen>
+    <dimen name="menu_buttons_margin">25dp</dimen>
+    <dimen name="menu_BTNS_text_size">22sp</dimen>
 </resources>

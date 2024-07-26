@@ -1,4 +1,9 @@
 <resources>
-    <string name="app_name">Android_final_project</string>
+    <string name="app_name">Budget Manager</string>
     <string name="application_name">Budget Manager</string>
+    <string name="add_activity_string">Add activity</string>
+    <string name="add_activities_string">Add activities</string>
+    <string name="show_activities_string">Show activities</string>
+    <string name="show_charts_string">Show charts</string>
+    <string name="menu_text">Menu</string>
 </resources>
