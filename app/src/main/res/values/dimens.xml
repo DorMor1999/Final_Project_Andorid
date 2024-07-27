@@ -5,4 +5,8 @@
     <dimen name="logo_splash_w_and_h">200dp</dimen>
     <dimen name="menu_buttons_margin">25dp</dimen>
     <dimen name="menu_BTNS_text_size">22sp</dimen>
+    <dimen name="nav_high">80dp</dimen>
+    <dimen name="nav_title_size">25sp</dimen>
+    <dimen name="default_nav_item_margin">8dp</dimen>
+    <dimen name="log_out_size_text_btn">15sp</dimen>
 </resources>

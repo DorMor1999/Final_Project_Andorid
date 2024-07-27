@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".Fragments.NavFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/FRAG_NAV_LOGO"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/budget_app_icon_xml"
+            android:layout_margin="@dimen/default_nav_item_margin"/>
+
+        <TextView
+            android:id="@+id/FRAG_NAV_TITLE"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1.5"
+            android:textSize="@dimen/nav_title_size"
+            android:text="Your Text Here"
+            android:textColor="@color/white"
+            android:gravity="center"
+            android:textAlignment="center"
+            android:layout_margin="@dimen/default_nav_item_margin"
+            />
+
+
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:id="@+id/FRAG_NAV_LOG_OUT_BTN"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:clickable="true"
+            android:layout_weight="1"
+            android:textColor="@color/white"
+            android:backgroundTint="@color/log_out_btn_color"
+            android:text="@string/logout_text"
+            android:textSize="@dimen/log_out_size_text_btn"
+            android:layout_margin="@dimen/default_nav_item_margin"/>
+
+    </LinearLayout>
+
+</FrameLayout>
