@@ -5,19 +5,10 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.FrameLayout;
 
-import androidx.activity.EdgeToEdge;
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.example.android_final_project.Fragments.NavFragment;
-import com.example.android_final_project.Interfaces.Callback_Log_Out_Clicked;
 import com.example.android_final_project.R;
-import com.firebase.ui.auth.AuthUI;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 
 public class MenuActivity extends AppCompatActivity  {
 
@@ -41,9 +32,18 @@ public class MenuActivity extends AppCompatActivity  {
     private void initViews() {
         navFragment = new NavFragment();
         navFragment.setTextNavTitle(TITLE);
-       //navFragment.setCallbackLogOutClicked(this);
+
+        //buttons handling
+        menu_BTN_add_activity.setOnClickListener(v -> moveToAddActivity());
+
         // Show fragment
         getSupportFragmentManager().beginTransaction().add(R.id.menu_FRAME_nav, navFragment).commit();
+    }
+
+    private void moveToAddActivity() {
+        Intent i = new Intent(this, AddActivity.class);
+        startActivity(i);
+        finish();
     }
 
     private void findViews() {

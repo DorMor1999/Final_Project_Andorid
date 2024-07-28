@@ -34,4 +34,11 @@ public class Income extends BusinessActivity {
                 return "Unknown";
         }
     }
+
+    @Override
+    public String toString() {
+        return "Income{" + super.toString()+
+                "incomeType=" + incomeType +
+                '}';
+    }
 }

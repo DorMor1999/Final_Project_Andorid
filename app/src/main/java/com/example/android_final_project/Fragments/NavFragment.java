@@ -14,8 +14,6 @@ import android.widget.TextView;
 
 import com.example.android_final_project.Activities.AuthActivity;
 import com.example.android_final_project.Activities.MenuActivity;
-import com.example.android_final_project.Activities.SplashActivity;
-import com.example.android_final_project.Interfaces.Callback_Log_Out_Clicked;
 import com.example.android_final_project.R;
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;

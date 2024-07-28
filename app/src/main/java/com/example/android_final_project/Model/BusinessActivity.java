@@ -48,4 +48,12 @@ public abstract class BusinessActivity {
         this.id = id;
         return this;
     }
+
+    @Override
+    public String toString() {
+        return  "id='" + id + '\'' +
+                ", description='" + description + '\'' +
+                ", date='" + date + '\'' +
+                ", price=" + price + " , ";
+    }
 }

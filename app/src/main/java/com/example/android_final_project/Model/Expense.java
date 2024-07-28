@@ -34,4 +34,11 @@ public class Expense extends BusinessActivity{
                 return "Unknown";
         }
     }
+
+    @Override
+    public String toString() {
+        return "Expense{" + super.toString() +
+                "expenseType=" + expenseType +
+                '}';
+    }
 }

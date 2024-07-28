@@ -2,17 +2,14 @@ package com.example.android_final_project.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 
-import androidx.activity.EdgeToEdge;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
+import com.example.android_final_project.Model.BusinessActivityHashMap;
+import com.example.android_final_project.Model.UsersHashMap;
 import com.example.android_final_project.R;
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.ErrorCodes;
@@ -20,8 +17,9 @@ import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract;
 import com.firebase.ui.auth.IdpResponse;
 import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.Arrays;
 import java.util.List;
@@ -76,6 +74,7 @@ public class AuthActivity extends AppCompatActivity {
             // Successfully signed in
 
             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+            //updateDB(user);
             moveToMenuActivity();
             // ...
         } else {
@@ -105,6 +104,14 @@ public class AuthActivity extends AppCompatActivity {
             }
 
         }
+    }
+
+    private void updateDB(FirebaseUser user) {
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference usersRef = database.getReference("users");
+        UsersHashMap newUsersMap = new UsersHashMap();
+        newUsersMap.getAllUsers().put(user.getUid() ,new BusinessActivityHashMap());
+        usersRef.setValue(newUsersMap);
     }
 
     private void moveToMenuActivity() {

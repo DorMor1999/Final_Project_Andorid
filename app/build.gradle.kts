@@ -48,4 +48,7 @@ dependencies {
 
     //Firebase Auth
     implementation (libs.firebase.ui.auth)
+
+    //Firebase DB
+    implementation(libs.firebase.database)
 }
