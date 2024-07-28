@@ -9,7 +9,7 @@
     <dimen name="nav_title_size">25sp</dimen>
     <dimen name="default_nav_item_margin">8dp</dimen>
     <dimen name="log_out_size_text_btn">15sp</dimen>
-    <dimen name="add_one_form_margin_top">55dp</dimen>
+    <dimen name="add_one_form_margin_top">50dp</dimen>
     <dimen name="padding_form_add_one">16dp</dimen>
     <dimen name="text_view_input_size_text_form">16sp</dimen>
     <dimen name="text_view_input_form_padding_top">8dp</dimen>
