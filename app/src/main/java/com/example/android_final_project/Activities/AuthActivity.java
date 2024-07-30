@@ -1,5 +1,6 @@
 package com.example.android_final_project.Activities;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -11,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.android_final_project.Interfaces.AddUserCallback;
 import com.example.android_final_project.R;
 import com.example.android_final_project.Utilities.DbOperations;
+import com.example.android_final_project.Utilities.DialogUtils;
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.ErrorCodes;
 import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract;
@@ -23,6 +25,10 @@ import java.util.Arrays;
 import java.util.List;
 
 public class AuthActivity extends AppCompatActivity {
+
+    private DialogUtils dialogUtils;
+    private final String ERROR_TITLE = "Authentication Error";
+
 
     // See: https://developer.android.com/training/basics/intents/result
     private final ActivityResultLauncher<Intent> signInLauncher = registerForActivityResult(
@@ -39,6 +45,8 @@ public class AuthActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_auth);
+
+        dialogUtils = new DialogUtils();
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
@@ -79,27 +87,37 @@ public class AuthActivity extends AppCompatActivity {
             // sign-in flow using the back button. Otherwise check
             // response.getError().getErrorCode() and handle the error.
             // ...
+            String errorMsg = "Something went wrong, try again later.";
             if (response == null) {
                 // User pressed back button
-                showErrorDialog("Sign in cancelled.");
-                return;
+                errorMsg = "Sign in cancelled.";
             }
 
             switch (response.getError().getErrorCode()) {
                 case ErrorCodes.NO_NETWORK:
-                    showErrorDialog("No internet connection.");
+                    errorMsg = "No internet connection.";
                     break;
                 case ErrorCodes.UNKNOWN_ERROR:
-                    showErrorDialog("Unknown error occurred.");
+                    errorMsg = "Unknown error occurred.";
                     break;
                 case ErrorCodes.EMAIL_MISMATCH_ERROR:
-                    showErrorDialog("Email mismatch error.");
+                    errorMsg = "Email mismatch error.";
                     break;
                 default:
-                    showErrorDialog("Unknown sign-in response.");
+                    errorMsg = "Something went wrong, try again later.";
                     break;
             }
 
+            dialogUtils.showDialog(AuthActivity.this, ERROR_TITLE, errorMsg,
+                    new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            // Log out the user
+                            FirebaseAuth.getInstance().signOut();
+                            signIn(); // Move to sign-in after OK
+                        }
+                    }
+            );
         }
     }
 
@@ -114,7 +132,16 @@ public class AuthActivity extends AppCompatActivity {
             @Override
             public void onFailure(Exception e) {
                 // Handle failure case
-                showErrorDialog("Something went wrong try again later");
+                dialogUtils.showDialog(AuthActivity.this, ERROR_TITLE, "Something went wrong, try again later.",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                // Log out the user
+                                FirebaseAuth.getInstance().signOut();
+                                signIn(); // Move to sign-in after OK
+                            }
+                        }
+                );
             }
         });
     }
@@ -123,13 +150,5 @@ public class AuthActivity extends AppCompatActivity {
         Intent i = new Intent(this, MenuActivity.class);
         startActivity(i);
         finish();
-    }
-
-    private void showErrorDialog(String message) {
-        new AlertDialog.Builder(this)
-                .setTitle("Authentication Error")
-                .setMessage(message)
-                .setPositiveButton(android.R.string.ok, null)
-                .show();
     }
 }

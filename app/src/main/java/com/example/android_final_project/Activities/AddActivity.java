@@ -24,6 +24,7 @@ import com.example.android_final_project.R;
 import com.example.android_final_project.Utilities.CreateExpense;
 import com.example.android_final_project.Utilities.CreateIncome;
 import com.example.android_final_project.Utilities.DbOperations;
+import com.example.android_final_project.Utilities.DialogUtils;
 import com.example.android_final_project.Utilities.Validators;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -50,6 +51,7 @@ public class AddActivity extends AppCompatActivity {
     private Validators validators;
     private CreateIncome createIncome;
     private CreateExpense createExpense;
+    private DialogUtils dialogUtils;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +60,8 @@ public class AddActivity extends AppCompatActivity {
 
         validators = new Validators();
         createIncome = new CreateIncome();
+        createExpense = new CreateExpense();
+        dialogUtils = new DialogUtils();
 
         findViews();
         initViews();
@@ -162,7 +166,7 @@ public class AddActivity extends AppCompatActivity {
             @Override
             public void onFailure(Exception e) {
                 // Handle failure case
-                showErrorDialog("Something went wrong try again later");
+                dialogUtils.showDialog(AddActivity.this, "Adding Error", "Something went wrong, try again later.", null);
             }
         }, newBusinessActivity);
 
@@ -222,14 +226,5 @@ public class AddActivity extends AppCompatActivity {
         Intent i = new Intent(this, MenuActivity.class);
         startActivity(i);
         finish();
-    }
-
-
-    private void showErrorDialog(String message) {
-        new AlertDialog.Builder(this)
-                .setTitle("Add Error")
-                .setMessage(message)
-                .setPositiveButton(android.R.string.ok, null)
-                .show();
     }
 }
