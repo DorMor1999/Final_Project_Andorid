@@ -14,11 +14,10 @@ import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.android_final_project.Fragments.NavFragment;
-import com.example.android_final_project.Interfaces.AddUserCallback;
+import com.example.android_final_project.Interfaces.ReqToDB;
 import com.example.android_final_project.Model.BusinessActivity;
 import com.example.android_final_project.R;
 import com.example.android_final_project.Utilities.CreateExpense;
@@ -156,7 +155,7 @@ public class AddActivity extends AppCompatActivity {
 
     private void addToDB(BusinessActivity newBusinessActivity){
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        DbOperations.getInstance().addNewBusinessActivity(user, new AddUserCallback() {
+        DbOperations.getInstance().addNewBusinessActivity(user, new ReqToDB() {
             @Override
             public void onSuccess() {
                 // Handle success case

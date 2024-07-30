@@ -6,10 +6,9 @@ import android.os.Bundle;
 
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.android_final_project.Interfaces.AddUserCallback;
+import com.example.android_final_project.Interfaces.ReqToDB;
 import com.example.android_final_project.R;
 import com.example.android_final_project.Utilities.DbOperations;
 import com.example.android_final_project.Utilities.DialogUtils;
@@ -122,7 +121,7 @@ public class AuthActivity extends AppCompatActivity {
     }
 
     private void updateDB(FirebaseUser user) {
-        DbOperations.getInstance().addUserToDB(user, new AddUserCallback() {
+        DbOperations.getInstance().addUserToDB(user, new ReqToDB() {
             @Override
             public void onSuccess() {
                 // Handle success case

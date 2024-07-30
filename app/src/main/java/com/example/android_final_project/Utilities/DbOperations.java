@@ -5,7 +5,7 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import com.example.android_final_project.Interfaces.AddUserCallback;
+import com.example.android_final_project.Interfaces.ReqToDB;
 import com.example.android_final_project.Model.BusinessActivity;
 import com.example.android_final_project.Model.BusinessActivityHashMap;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -40,7 +40,7 @@ public class DbOperations {
         return instance;
     }
 
-    public void  addUserToDB(FirebaseUser user, AddUserCallback callback){
+    public void  addUserToDB(FirebaseUser user, ReqToDB callback){
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference usersRef = database.getReference("users");
 
@@ -78,7 +78,7 @@ public class DbOperations {
     }
 
 
-    public void addNewBusinessActivity(FirebaseUser user, AddUserCallback callback, BusinessActivity newBusinessActivity) {
+    public void addNewBusinessActivity(FirebaseUser user, ReqToDB callback, BusinessActivity newBusinessActivity) {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference usersRef = database.getReference("users");
 
