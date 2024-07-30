@@ -35,6 +35,7 @@ public class MenuActivity extends AppCompatActivity  {
 
         //buttons handling
         menu_BTN_add_activity.setOnClickListener(v -> moveToAddActivity());
+        menu_BTN_show_activities.setOnClickListener(v -> moveToActivitiesActivity());
 
         // Show fragment
         getSupportFragmentManager().beginTransaction().add(R.id.menu_FRAME_nav, navFragment).commit();
@@ -42,6 +43,12 @@ public class MenuActivity extends AppCompatActivity  {
 
     private void moveToAddActivity() {
         Intent i = new Intent(this, AddActivity.class);
+        startActivity(i);
+        finish();
+    }
+
+    private void moveToActivitiesActivity() {
+        Intent i = new Intent(this, ActivitiesActivity.class);
         startActivity(i);
         finish();
     }

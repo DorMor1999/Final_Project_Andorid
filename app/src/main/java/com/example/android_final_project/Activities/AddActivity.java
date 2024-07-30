@@ -32,7 +32,7 @@ import java.util.Calendar;
 
 public class AddActivity extends AppCompatActivity {
 
-    private FrameLayout menu_FRAME_nav;
+    private FrameLayout add_FRAME_nav;
     private NavFragment navFragment;
     private final String TITLE = "Add";
 
@@ -70,7 +70,7 @@ public class AddActivity extends AppCompatActivity {
         //nav fragment
         navFragment = new NavFragment();
         navFragment.setTextNavTitle(TITLE);
-        getSupportFragmentManager().beginTransaction().add(R.id.menu_FRAME_nav, navFragment).commit();
+        getSupportFragmentManager().beginTransaction().add(R.id.add_FRAME_nav, navFragment).commit();
 
         //date
         ADDONE_et_date.setOnClickListener(new View.OnClickListener() {
@@ -180,7 +180,7 @@ public class AddActivity extends AppCompatActivity {
 
     private void findViews() {
         // FrameLayout
-        menu_FRAME_nav = findViewById(R.id.menu_FRAME_nav);
+        add_FRAME_nav = findViewById(R.id.add_FRAME_nav);
 
         // Description input
         ADDONE_et_description = findViewById(R.id.ADDONE_et_description);

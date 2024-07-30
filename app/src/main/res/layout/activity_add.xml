@@ -8,13 +8,13 @@
     tools:context=".Activities.AddActivity">
 
     <FrameLayout
-        android:id="@+id/menu_FRAME_nav"
+        android:id="@+id/add_FRAME_nav"
         android:layout_width="match_parent"
         android:layout_height="@dimen/nav_high"
         android:background="@color/application_icon_blue"/>
 
     <LinearLayout
-        android:layout_below="@+id/menu_FRAME_nav"
+        android:layout_below="@+id/add_FRAME_nav"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"

@@ -23,6 +23,8 @@
     <string name="expense_text">Expense</string>
     <string name="type_details_text">Type Details</string>
     <string name="submit_text">Submit</string>
+    <string name="display_options_string">Display options</string>
+    <string name="_0_string">0</string>
     <string-array name="type_expense_array">
         <item>Housing</item>
         <item>Utilities</item>

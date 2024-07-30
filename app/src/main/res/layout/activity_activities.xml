@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activities.ActivitiesActivity">
+
+    <FrameLayout
+        android:id="@+id/activities_FRAME_nav"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/nav_high"
+        android:background="@color/application_icon_blue"/>
+
+    <!-- Display options button -->
+    <Button
+        android:layout_below="@id/activities_FRAME_nav"
+        android:id="@+id/activities_btn_display_options"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/display_options_string"
+        android:textAllCaps="false"
+        android:backgroundTint="@color/black"
+        android:textColor="@android:color/white"
+        android:layout_marginTop="@dimen/margin_def_16"
+        android:layout_marginHorizontal="@dimen/margin_def_16"/>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/activities_linear_layout_incomes_expenses_overall"
+        android:layout_below="@id/activities_btn_display_options"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_margin="@dimen/margin_def_16">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <TextView
+                android:id="@+id/activities_incomes_tv_label"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Incomes:"
+                android:gravity="center"
+                android:textSize="@dimen/_16sp"
+                android:textColor="@android:color/holo_green_dark" />
+
+            <TextView
+                android:id="@+id/activities_incomes_tv_amount"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/_0_string"
+                android:gravity="center"
+                android:textSize="@dimen/_16sp"
+                android:textColor="@android:color/holo_green_dark" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <TextView
+                android:id="@+id/activities_expenses_tv_label"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Expenses:"
+                android:gravity="center"
+                android:textSize="@dimen/_16sp"
+                android:textColor="@android:color/holo_red_dark" />
+
+            <TextView
+                android:id="@+id/activities_expenses_tv_amount"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/_0_string"
+                android:gravity="center"
+                android:textSize="@dimen/_16sp"
+                android:textColor="@android:color/holo_red_dark" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <TextView
+                android:id="@+id/activities_overall_tv_label"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Overall:"
+                android:textSize="@dimen/_16sp"
+                android:gravity="center"
+                android:textColor="@android:color/black" />
+
+            <TextView
+                android:id="@+id/activities_overall_tv_amount"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/_0_string"
+                android:textSize="@dimen/_16sp"
+                android:gravity="center"
+                android:textColor="@android:color/black" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <FrameLayout
+        android:layout_below="@id/activities_linear_layout_incomes_expenses_overall"
+        android:id="@+id/activities_FRAME_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/margin_def_16"
+        android:background="@color/white"/>
+
+
+
+
+
+</RelativeLayout>
