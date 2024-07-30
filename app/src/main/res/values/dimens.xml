@@ -17,4 +17,7 @@
     <dimen name="submit_btn_form_margin_top_ADDONE">16dp</dimen>
     <dimen name="margin_def_16">16dp</dimen>
     <dimen name="_16sp">16sp</dimen>
+    <dimen name="_32dp">32dp</dimen>
+    <dimen name="card_elevation">4dp</dimen>
+    <dimen name="_16dp">16dp</dimen>
 </resources>

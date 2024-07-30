@@ -42,6 +42,9 @@ dependencies {
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
 
+    // card
+    implementation (libs.cardview)
+
     //Firebase
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.analytics)

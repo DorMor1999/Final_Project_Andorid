@@ -31,4 +31,12 @@ public class BusinessActivityHashMap {
         this.allActivities = allActivities;
         return this;
     }
+
+    @Override
+    public String toString() {
+        return "BusinessActivityHashMap{" +
+                "userId='" + userId + '\'' +
+                ", allActivities=" + allActivities +
+                '}';
+    }
 }
