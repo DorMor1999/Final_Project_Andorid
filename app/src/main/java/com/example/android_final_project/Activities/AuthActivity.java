@@ -8,9 +8,9 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.android_final_project.Model.BusinessActivityHashMap;
-import com.example.android_final_project.Model.UsersHashMap;
+import com.example.android_final_project.Interfaces.AddUserCallback;
 import com.example.android_final_project.R;
+import com.example.android_final_project.Utilities.DbOperations;
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.ErrorCodes;
 import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract;
@@ -18,8 +18,6 @@ import com.firebase.ui.auth.IdpResponse;
 import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.Arrays;
 import java.util.List;
@@ -74,8 +72,7 @@ public class AuthActivity extends AppCompatActivity {
             // Successfully signed in
 
             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-            //updateDB(user);
-            moveToMenuActivity();
+            updateDB(user);
             // ...
         } else {
             // Sign in failed. If response is null the user canceled the
@@ -107,11 +104,19 @@ public class AuthActivity extends AppCompatActivity {
     }
 
     private void updateDB(FirebaseUser user) {
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference usersRef = database.getReference("users");
-        UsersHashMap newUsersMap = new UsersHashMap();
-        newUsersMap.getAllUsers().put(user.getUid() ,new BusinessActivityHashMap());
-        usersRef.setValue(newUsersMap);
+        DbOperations.getInstance().addUserToDB(user, new AddUserCallback() {
+            @Override
+            public void onSuccess() {
+                // Handle success case
+                moveToMenuActivity();
+            }
+
+            @Override
+            public void onFailure(Exception e) {
+                // Handle failure case
+                showErrorDialog("Something went wrong try again later");
+            }
+        });
     }
 
     private void moveToMenuActivity() {

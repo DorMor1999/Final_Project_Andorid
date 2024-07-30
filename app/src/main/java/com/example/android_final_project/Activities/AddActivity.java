@@ -1,9 +1,7 @@
 package com.example.android_final_project.Activities;
 
-import static com.example.android_final_project.Utilities.CreateIncome.createIncomeObj;
-import static com.example.android_final_project.Utilities.createExpense.createExpenseObj;
-
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -16,16 +14,19 @@ import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.example.android_final_project.Fragments.NavFragment;
+import com.example.android_final_project.Interfaces.AddUserCallback;
 import com.example.android_final_project.Model.BusinessActivity;
 import com.example.android_final_project.R;
+import com.example.android_final_project.Utilities.CreateExpense;
+import com.example.android_final_project.Utilities.CreateIncome;
+import com.example.android_final_project.Utilities.DbOperations;
 import com.example.android_final_project.Utilities.Validators;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.Calendar;
 
@@ -44,11 +45,19 @@ public class AddActivity extends AppCompatActivity {
     private Button ADDONE_btn_submit;
     private boolean IS_INCOME;
 
+
+    //utils classes
+    private Validators validators;
+    private CreateIncome createIncome;
+    private CreateExpense createExpense;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add);
 
+        validators = new Validators();
+        createIncome = new CreateIncome();
 
         findViews();
         initViews();
@@ -92,7 +101,7 @@ public class AddActivity extends AppCompatActivity {
         boolean formIsOk = true;
 
         //check description
-        if(Validators.stringIsEmpty(ADDONE_et_description.getText().toString())){
+        if(validators.stringIsEmpty(ADDONE_et_description.getText().toString())){
             formIsOk = false;
             ADDONE_tv_description_alert.setVisibility(View.VISIBLE);
         }
@@ -105,7 +114,7 @@ public class AddActivity extends AppCompatActivity {
         double price = 0.0;
         try {
             price = Double.parseDouble(priceText);
-            if (!Validators.doubleIsPositive(price)) {
+            if (!validators.doubleIsPositive(price)) {
                 ADDONE_tv_price_alert.setVisibility(View.VISIBLE);
                 formIsOk = false;
             } else {
@@ -118,7 +127,7 @@ public class AddActivity extends AppCompatActivity {
         }
 
         //check date
-        if(Validators.stringIsEmpty(ADDONE_et_date.getText().toString())){
+        if(validators.stringIsEmpty(ADDONE_et_date.getText().toString())){
             formIsOk = false;
             ADDONE_tv_date_alert.setVisibility(View.VISIBLE);
         }
@@ -130,13 +139,32 @@ public class AddActivity extends AppCompatActivity {
         if(formIsOk){
             BusinessActivity newBusinessActivity;
             if (IS_INCOME){
-                newBusinessActivity = createIncomeObj(ADDONE_et_description.getText().toString(), price, ADDONE_et_date.getText().toString(), ADDONE_spinner_type.getSelectedItem().toString());
+                newBusinessActivity = createIncome.createIncomeObj(ADDONE_et_description.getText().toString(), price, ADDONE_et_date.getText().toString(), ADDONE_spinner_type.getSelectedItem().toString());
             }
             else {
-                newBusinessActivity = createExpenseObj(ADDONE_et_description.getText().toString(), price, ADDONE_et_date.getText().toString(), ADDONE_spinner_type.getSelectedItem().toString());
+                newBusinessActivity = createExpense.createExpenseObj(ADDONE_et_description.getText().toString(), price, ADDONE_et_date.getText().toString(), ADDONE_spinner_type.getSelectedItem().toString());
             }
             Log.d("new object", newBusinessActivity.toString());
+            addToDB(newBusinessActivity);
         }
+
+    }
+
+    private void addToDB(BusinessActivity newBusinessActivity){
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        DbOperations.getInstance().addNewBusinessActivity(user, new AddUserCallback() {
+            @Override
+            public void onSuccess() {
+                // Handle success case
+                moveToMenuActivity();
+            }
+
+            @Override
+            public void onFailure(Exception e) {
+                // Handle failure case
+                showErrorDialog("Something went wrong try again later");
+            }
+        }, newBusinessActivity);
 
     }
 
@@ -188,5 +216,20 @@ public class AddActivity extends AppCompatActivity {
                 (view, selectedYear, selectedMonth, selectedDay) -> ADDONE_et_date.setText(selectedDay + "/" + (selectedMonth + 1) + "/" + selectedYear),
                 year, month, day);
         datePickerDialog.show();
+    }
+
+    private void moveToMenuActivity() {
+        Intent i = new Intent(this, MenuActivity.class);
+        startActivity(i);
+        finish();
+    }
+
+
+    private void showErrorDialog(String message) {
+        new AlertDialog.Builder(this)
+                .setTitle("Add Error")
+                .setMessage(message)
+                .setPositiveButton(android.R.string.ok, null)
+                .show();
     }
 }

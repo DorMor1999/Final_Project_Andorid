@@ -9,9 +9,12 @@ import com.example.android_final_project.Enums.ExpenseType;
 
 import com.example.android_final_project.Model.Expense;
 
-public class createExpense {
+public class CreateExpense {
 
-    public static Expense createExpenseObj(String description, double price, String date, String expenseType){
+    public CreateExpense() {
+    }
+
+    public Expense createExpenseObj(String description, double price, String date, String expenseType){
         Expense newExpense = new Expense();
         newExpense
                 .setExpenseType(getExpenseTypeENUM(expenseType)) //have to be first
@@ -22,7 +25,7 @@ public class createExpense {
         return newExpense;
     }
 
-    public static ExpenseType getExpenseTypeENUM(String expenseType) {
+    public ExpenseType getExpenseTypeENUM(String expenseType) {
         switch (expenseType) {
             case "Housing":
                 return HOUSING;

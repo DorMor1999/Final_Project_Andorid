@@ -13,7 +13,10 @@ import com.example.android_final_project.Model.Income;
 
 public class CreateIncome {
 
-    public static Income createIncomeObj(String description, double price, String date, String incomeType){
+    public CreateIncome() {
+    }
+
+    public Income createIncomeObj(String description, double price, String date, String incomeType){
         Income newIncome = new Income();
         newIncome
                 .setIncomeType(getIncomeTypeENUM(incomeType)) //have to be first
@@ -24,7 +27,7 @@ public class CreateIncome {
         return newIncome;
     }
 
-    public static IncomeType getIncomeTypeENUM(String incomeType) {
+    public IncomeType getIncomeTypeENUM(String incomeType) {
         switch (incomeType) {
             case "Salary":
                 return SALARY;
