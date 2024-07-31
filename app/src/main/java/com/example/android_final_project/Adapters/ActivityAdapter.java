@@ -1,5 +1,6 @@
 package com.example.android_final_project.Adapters;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.android_final_project.Interfaces.DeleteClick;
 import com.example.android_final_project.Model.BusinessActivity;
 import com.example.android_final_project.Model.Expense;
 import com.example.android_final_project.Model.Income;
@@ -21,8 +23,15 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.Activi
 
     private final ArrayList<BusinessActivity> activities_list;
 
-    public ActivityAdapter(ArrayList<BusinessActivity> activities_list) {
+    private OnItemClickListener onItemClickListener;
+
+    public interface OnItemClickListener {
+        void onDeleteClick(String item_id);
+    }
+
+    public ActivityAdapter(ArrayList<BusinessActivity> activities_list, OnItemClickListener onItemClickListener) {
         this.activities_list = activities_list;
+        this.onItemClickListener = onItemClickListener;
     }
 
     @NonNull
@@ -34,16 +43,9 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.Activi
 
     @Override
     public void onBindViewHolder(@NonNull ActivityViewHolder holder, int position) {
-        /*
-        button staff for later
-        holder.itemView.setOnClickListener(v -> {
-            if (onItemClickListener != null) {
-                onItemClickListener.onItemClick(record.getLatitude(), record.getLongitude());
-            }
-        });
-         */
-
         BusinessActivity businessActivity = getItem(position);
+
+        Log.d("Adapter", "Binding data at position " + position + ": " + businessActivity.toString());
 
         // Bind the businessActivity data to the views
         holder.date_tv_list_item.setText(businessActivity.getDate());
@@ -56,6 +58,12 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.Activi
             holder.title_tv_list_item.setText("Income");
             holder.type_tv_list_item.setText("Type: " + ((Income) businessActivity).getIncomeTypeString());
         }
+
+        holder.delete_btn_list_item.setOnClickListener(v -> {
+            if (onItemClickListener != null) {
+                onItemClickListener.onDeleteClick(businessActivity.getId());
+            }
+        });
 
     }
 

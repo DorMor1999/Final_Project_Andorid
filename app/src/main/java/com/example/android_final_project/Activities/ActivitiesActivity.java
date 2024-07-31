@@ -15,16 +15,18 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.android_final_project.Fragments.ListFragment;
 import com.example.android_final_project.Fragments.NavFragment;
+import com.example.android_final_project.Interfaces.DeleteClick;
 import com.example.android_final_project.Interfaces.GetDataFromDB;
 import com.example.android_final_project.Interfaces.ReqToDB;
 import com.example.android_final_project.Model.BusinessActivityHashMap;
+import com.example.android_final_project.Model.BusinessActivityList;
 import com.example.android_final_project.R;
 import com.example.android_final_project.Utilities.DbOperations;
 import com.example.android_final_project.Utilities.DialogUtils;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-public class ActivitiesActivity extends AppCompatActivity {
+public class ActivitiesActivity extends AppCompatActivity implements DeleteClick {
 
     private FrameLayout activities_FRAME_nav;
     private NavFragment navFragment;
@@ -44,6 +46,7 @@ public class ActivitiesActivity extends AppCompatActivity {
     private TextView activities_expenses_tv_amount;
     private TextView activities_overall_tv_amount;
     private DialogUtils dialogUtils;
+    private BusinessActivityList businessActivityList;
 
 
     @Override
@@ -76,8 +79,7 @@ public class ActivitiesActivity extends AppCompatActivity {
     }
 
     private void initViews() {
-        // Manage data and handle it in the callback
-        manageData();
+
 
         //nav fragment
         navFragment = new NavFragment();
@@ -85,8 +87,13 @@ public class ActivitiesActivity extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction().add(R.id.activities_FRAME_nav, navFragment).commit();
 
         //list fragment
-        //listFragment = new ListFragment();
-        //getSupportFragmentManager().beginTransaction().add(R.id.activities_FRAME_list, listFragment).commit();
+        listFragment = new ListFragment();
+        listFragment.setCallbackDeleteItemClicked(this);
+        // Manage data and handle it in the callback
+        manageData();
+        getSupportFragmentManager().beginTransaction().add(R.id.activities_FRAME_list, listFragment).commit();
+
+
     }
 
     private void manageData() {
@@ -94,8 +101,11 @@ public class ActivitiesActivity extends AppCompatActivity {
             @Override
             public void getData(BusinessActivityHashMap businessActivityHashMap) {
                 // Handle data here
-                Log.d("Data", businessActivityHashMap.toString());
-                // Update UI or perform other actions
+                Log.d("Data in map", businessActivityHashMap.toString());
+                businessActivityList = new BusinessActivityList();
+                businessActivityList.putHashMapDataInList(businessActivityHashMap.getAllActivities());
+                Log.d("data in list", businessActivityList.toString());
+                listFragment.setBusinessActivityList(businessActivityList.getBusinessActivityListDisplay());
             }
         });
     }
@@ -117,4 +127,25 @@ public class ActivitiesActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    public void listItemDeleteClicked(String item_id) {
+        Log.d("ID to delete", "listItemDeleteClicked: " + item_id);
+        deleteInDB(item_id);
+    }
+
+    private void deleteInDB(String activityId) {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        DbOperations.getInstance().deleteBusinessActivity(user, new ReqToDB() {
+            @Override
+            public void onSuccess() {
+                // Handle success case
+            }
+
+            @Override
+            public void onFailure(Exception e) {
+                // Handle failure case
+                dialogUtils.showDialog(ActivitiesActivity.this, "Delete Error", "Something went wrong, try again later.", null);
+            }
+        }, activityId);
+    }
 }

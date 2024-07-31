@@ -156,4 +156,20 @@ public class DbOperations {
             }
         });
     }
+
+    public void deleteBusinessActivity(FirebaseUser user, ReqToDB callback, String businessActivityId) {
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference usersRef = database.getReference("users").child(user.getUid());
+        DatabaseReference activityRef = usersRef.child("allActivities").child(businessActivityId);
+
+        activityRef.removeValue().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                // Notify success
+                callback.onSuccess();
+            } else {
+                // Notify failure and pass exception to callback
+                callback.onFailure(task.getException());
+            }
+        });
+    }
 }
