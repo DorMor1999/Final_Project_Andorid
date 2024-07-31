@@ -178,7 +178,7 @@
         android:orientation="horizontal">
 
         <RadioButton
-            android:id="@+id/filter_frame_expense"
+            android:id="@+id/filter_frame_rb_expense"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Expense"
@@ -186,7 +186,7 @@
             android:layout_marginEnd="16dp" />
 
         <RadioButton
-            android:id="@+id/filter_frame_income"
+            android:id="@+id/filter_frame_rb_income"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Income"
@@ -194,7 +194,7 @@
             android:layout_marginEnd="16dp" />
 
         <RadioButton
-            android:id="@+id/filter_frame_both"
+            android:id="@+id/filter_frame_rb_both"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Both"

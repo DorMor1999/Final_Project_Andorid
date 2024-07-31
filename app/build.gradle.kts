@@ -42,8 +42,7 @@ dependencies {
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
 
-    //seek bar
-    implementation (libs.github.rangeseekbar)
+
 
 
     // card

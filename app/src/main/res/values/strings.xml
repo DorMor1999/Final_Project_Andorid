@@ -39,4 +39,13 @@
         <item>Dividends</item>
         <item>Other</item>
     </string-array>
+    <string-array name="sort_options">
+        <item>Don\'t sort</item>
+        <item>Sort by price low to high</item>
+        <item>Sort by price high to low</item>
+        <item>Sort by date low to high</item>
+        <item>Sort by date high to low</item>
+        <item>Sort by description low to high</item>
+        <item>Sort by description high to low</item>
+    </string-array>
 </resources>
