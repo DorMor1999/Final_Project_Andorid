@@ -22,25 +22,6 @@
         android:orientation="horizontal"
         android:layout_below="@id/activities_FRAME_nav">
 
-
-        <!-- Display options button -->
-        <Button
-            android:id="@+id/activities_btn_export_data"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:text="Export Data"
-            android:textAllCaps="false"
-            android:backgroundTint="@color/green_excel"
-            android:textColor="@android:color/white"
-            />
-
-        <View
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="0.1"
-            android:visibility="invisible"/>
-
         <!-- Display options button -->
         <Button
             android:id="@+id/activities_btn_display_options"

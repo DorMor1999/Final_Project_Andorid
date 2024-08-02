@@ -36,9 +36,16 @@ public class MenuActivity extends AppCompatActivity  {
         //buttons handling
         menu_BTN_add_activity.setOnClickListener(v -> moveToAddActivity());
         menu_BTN_show_activities.setOnClickListener(v -> moveToActivitiesActivity());
+        menu_BTN_show_charts.setOnClickListener(v -> moveToChartsActivity());
 
         // Show fragment
         getSupportFragmentManager().beginTransaction().add(R.id.menu_FRAME_nav, navFragment).commit();
+    }
+
+    private void moveToChartsActivity() {
+        Intent i = new Intent(this, ChartsActivity.class);
+        startActivity(i);
+        finish();
     }
 
     private void moveToAddActivity() {

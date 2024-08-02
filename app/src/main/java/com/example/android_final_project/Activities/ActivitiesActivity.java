@@ -43,7 +43,7 @@ public class ActivitiesActivity extends AppCompatActivity implements DeleteClick
     private ListFragment listFragment;
     private  LinearLayout activities_buttons_container;
     private Button activities_btn_display_options;
-    private Button activities_btn_export_data;
+
 
     private LinearLayout activities_linear_layout_incomes_expenses_overall;
 
@@ -90,7 +90,6 @@ public class ActivitiesActivity extends AppCompatActivity implements DeleteClick
 
         //buttons part
         activities_buttons_container = findViewById(R.id.activities_buttons_container);
-        activities_btn_export_data = findViewById(R.id.activities_btn_export_data);
         activities_btn_display_options = findViewById(R.id.activities_btn_display_options);
 
         //linear layout and what inside
