@@ -114,6 +114,7 @@ public class ActivitiesActivity extends AppCompatActivity implements DeleteClick
         filterFragment = new FilterFragment();
         filterFragment.setCloseFilterCallback(this);
         filterFragment.setDisplayFilterCallback(this);
+        filterFragment.setIsChartsActivity(false);
         getSupportFragmentManager().beginTransaction().add(R.id.activities_FRAME_filter, filterFragment).commit();
 
         //handle click display options

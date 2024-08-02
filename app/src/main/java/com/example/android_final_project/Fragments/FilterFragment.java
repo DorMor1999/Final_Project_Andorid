@@ -1,5 +1,6 @@
 package com.example.android_final_project.Fragments;
 
+import static com.example.android_final_project.Enums.SortOptions.DATE_LOW_TO_HIGH;
 import static com.example.android_final_project.Enums.SortOptions.stringToSortOptions;
 
 import android.app.DatePickerDialog;
@@ -64,6 +65,11 @@ public class FilterFragment extends Fragment {
     private CloseFilterCallback listenerClose;
     private DisplayFilterCallback listenerDisplay;
     private Validators validators;
+    private boolean isChartsActivity = false;
+
+    public void setIsChartsActivity(boolean isChartsActivity){
+        this.isChartsActivity = isChartsActivity;
+    }
 
     public void setCloseFilterCallback(CloseFilterCallback listenerClose) {
         this.listenerClose = listenerClose;
@@ -113,9 +119,17 @@ public class FilterFragment extends Fragment {
         filter_frame_rb_both.setChecked(true);
         setupListenerRadioGroup();
 
-        //spinner staff start with DONT_SORT
-        setSpinnerAdapter(filter_frame_sort_spinner, R.array.sort_options);
-        setupSpinnerListener(filter_frame_sort_spinner);
+        if (isChartsActivity){
+            filter_frame_sort_spinner.setVisibility(View.GONE);
+            filter_frame_sort_label.setVisibility(View.GONE);
+        }
+        else {
+            //spinner staff start with DONT_SORT
+            filter_frame_sort_spinner.setVisibility(View.VISIBLE);
+            filter_frame_sort_label.setVisibility(View.VISIBLE);
+            setSpinnerAdapter(filter_frame_sort_spinner, R.array.sort_options);
+            setupSpinnerListener(filter_frame_sort_spinner);
+        }
 
         //adding the buttons
         filter_frame_close_button.setOnClickListener(v -> clickClose());
@@ -163,7 +177,9 @@ public class FilterFragment extends Fragment {
         }
 
         if (formIsOk && listenerDisplay != null){
-            Log.d("sort option", sortOption.toString());
+            if (isChartsActivity){
+                sortOption = DATE_LOW_TO_HIGH;
+            }
             listenerDisplay.onButtonClickedDisplay(filter_frame_date_checkbox.isChecked(), filter_frame_date_picker_from.getText().toString(), filter_frame_date_picker_to.getText().toString(), filter_frame_price_checkbox.isChecked(), min, max, type, sortOption );
         }
     }

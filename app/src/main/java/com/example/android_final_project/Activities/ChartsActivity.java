@@ -67,6 +67,7 @@ public class ChartsActivity extends AppCompatActivity implements CloseFilterCall
         filterFragment = new FilterFragment();
         filterFragment.setCloseFilterCallback(this);
         filterFragment.setDisplayFilterCallback(this);
+        filterFragment.setIsChartsActivity(true);
         getSupportFragmentManager().beginTransaction().add(R.id.charts_FRAME_filter, filterFragment).commit();
 
         //handle click display options
@@ -132,7 +133,7 @@ public class ChartsActivity extends AppCompatActivity implements CloseFilterCall
                 .setFilterByDate(false)
                 .setFilterByPrice(false)
                 .setBusinessActivityType(BusinessActivityType.BOTH)
-                .setSortOption(SortOptions.DONT_SORT);
+                .setSortOption(SortOptions.DATE_LOW_TO_HIGH);
     }
 
 
