@@ -19,6 +19,18 @@ public class BusinessActivityList {
     private double incomes = 0.0D;
     private double expenses = 0.0D;
     private double overall = 0.0D;
+    private double incomesSalary = 0.0D;
+    private double incomesBonuses = 0.0D;
+    private double incomesInterest = 0.0D;
+    private double incomesDividends = 0.0D;
+    private double incomesOther = 0.0D;
+    private  double expensesHousing = 0.0D;
+    private  double expensesUtilities = 0.0D;
+    private  double expensesGroceries = 0.0D;
+    private  double expensesTransport = 0.0D;
+    private  double expensesOther = 0.0D;
+
+
 
     private ArrayList<BusinessActivity> businessActivityList = new ArrayList<>();
     private ArrayList<BusinessActivity> businessActivityListDisplay = new ArrayList<>();
@@ -172,20 +184,171 @@ public class BusinessActivityList {
         return overall;
     }
 
-    public void calculateDisplay(){
+    public double getIncomesSalary() {
+        return incomesSalary;
+    }
+
+    public BusinessActivityList setIncomesSalary(double incomesSalary) {
+        this.incomesSalary = incomesSalary;
+        return this;
+    }
+
+    public double getIncomesBonuses() {
+        return incomesBonuses;
+    }
+
+    public BusinessActivityList setIncomesBonuses(double incomesBonuses) {
+        this.incomesBonuses = incomesBonuses;
+        return this;
+    }
+
+    public double getIncomesInterest() {
+        return incomesInterest;
+    }
+
+    public BusinessActivityList setIncomesInterest(double incomesInterest) {
+        this.incomesInterest = incomesInterest;
+        return this;
+    }
+
+    public double getIncomesDividends() {
+        return incomesDividends;
+    }
+
+    public BusinessActivityList setIncomesDividends(double incomesDividends) {
+        this.incomesDividends = incomesDividends;
+        return this;
+    }
+
+    public double getIncomesOther() {
+        return incomesOther;
+    }
+
+    public BusinessActivityList setIncomesOther(double incomesOther) {
+        this.incomesOther = incomesOther;
+        return this;
+    }
+
+    public double getExpensesHousing() {
+        return expensesHousing;
+    }
+
+    public BusinessActivityList setExpensesHousing(double expensesHousing) {
+        this.expensesHousing = expensesHousing;
+        return this;
+    }
+
+    public double getExpensesUtilities() {
+        return expensesUtilities;
+    }
+
+    public BusinessActivityList setExpensesUtilities(double expensesUtilities) {
+        this.expensesUtilities = expensesUtilities;
+        return this;
+    }
+
+    public double getExpensesGroceries() {
+        return expensesGroceries;
+    }
+
+    public BusinessActivityList setExpensesGroceries(double expensesGroceries) {
+        this.expensesGroceries = expensesGroceries;
+        return this;
+    }
+
+    public double getExpensesTransport() {
+        return expensesTransport;
+    }
+
+    public BusinessActivityList setExpensesTransport(double expensesTransport) {
+        this.expensesTransport = expensesTransport;
+        return this;
+    }
+
+    public double getExpensesOther() {
+        return expensesOther;
+    }
+
+    public BusinessActivityList setExpensesOther(double expensesOther) {
+        this.expensesOther = expensesOther;
+        return this;
+    }
+
+    public void calculateDisplay() {
+        // Reset all totals
         incomes = 0.0D;
         expenses = 0.0D;
         overall = 0.0D;
-        for (int i = 0; i < businessActivityListDisplay.size(); i++) {
-            if (businessActivityListDisplay.get(i) instanceof Expense){
-                expenses += businessActivityListDisplay.get(i).getPrice();
-                overall -= businessActivityListDisplay.get(i).getPrice();
-            } else if (businessActivityListDisplay.get(i) instanceof Income) {
-                incomes += businessActivityListDisplay.get(i).getPrice();
-                overall += businessActivityListDisplay.get(i).getPrice();
+
+        // Reset individual income types
+        incomesSalary = 0.0D;
+        incomesBonuses = 0.0D;
+        incomesInterest = 0.0D;
+        incomesDividends = 0.0D;
+        incomesOther = 0.0D;
+
+        // Reset individual expense types
+        expensesHousing = 0.0D;
+        expensesUtilities = 0.0D;
+        expensesGroceries = 0.0D;
+        expensesTransport = 0.0D;
+        expensesOther = 0.0D;
+
+        // Calculate totals
+        for (BusinessActivity activity : businessActivityListDisplay) {
+            double price = activity.getPrice();
+            if (activity instanceof Expense) {
+                expenses += price;
+                overall -= price;  // Subtract expenses from overall balance
+
+                // Distribute expense into categories
+                Expense expense = (Expense) activity;
+                switch (expense.getExpenseType()) {
+                    case HOUSING:
+                        expensesHousing += price;
+                        break;
+                    case UTILITIES:
+                        expensesUtilities += price;
+                        break;
+                    case GROCERIES:
+                        expensesGroceries += price;
+                        break;
+                    case TRANSPORT:
+                        expensesTransport += price;
+                        break;
+                    case OTHER:
+                        expensesOther += price;
+                        break;
+                    default:
+                        throw new IllegalArgumentException("Unknown expense type: " + expense.getExpenseType());
+                }
+            } else if (activity instanceof Income) {
+                incomes += price;
+                overall += price;  // Add incomes to overall balance
+
+                // Distribute income into categories
+                Income income = (Income) activity;
+                switch (income.getIncomeType()) {
+                    case SALARY:
+                        incomesSalary += price;
+                        break;
+                    case BONUSES:
+                        incomesBonuses += price;
+                        break;
+                    case INTEREST:
+                        incomesInterest += price;
+                        break;
+                    case DIVIDENDS:
+                        incomesDividends += price;
+                        break;
+                    case OTHER:
+                        incomesOther += price;
+                        break;
+                    default:
+                        throw new IllegalArgumentException("Unknown income type: " + income.getIncomeType());
+                }
             }
         }
     }
-
 
 }
