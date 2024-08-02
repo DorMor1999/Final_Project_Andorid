@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -54,9 +55,11 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.Activi
         if(businessActivity instanceof Expense){
             holder.title_tv_list_item.setText("Expense");
             holder.type_tv_list_item.setText("Type: " + ((Expense) businessActivity).getExpenseTypeString());
+            holder.card_list_background.setImageResource(R.drawable.background_card_expense);
         }else{
             holder.title_tv_list_item.setText("Income");
             holder.type_tv_list_item.setText("Type: " + ((Income) businessActivity).getIncomeTypeString());
+            holder.card_list_background.setImageResource(R.drawable.background_card_income);
         }
 
         holder.delete_btn_list_item.setOnClickListener(v -> {
@@ -84,6 +87,7 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.Activi
         private final TextView type_tv_list_item;
         private final TextView price_tv_list_item;
         private  final Button delete_btn_list_item;
+        private final ImageView card_list_background;
 
         public ActivityViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -94,6 +98,7 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.Activi
             type_tv_list_item = itemView.findViewById(R.id.type_tv_list_item);
             price_tv_list_item = itemView.findViewById(R.id.price_tv_list_item);
             delete_btn_list_item = itemView.findViewById(R.id.delete_btn_list_item);
+            card_list_background = itemView.findViewById(R.id.card_list_background);
         }
     }
 }
