@@ -126,9 +126,9 @@ public class ChartsActivity extends AppCompatActivity implements CloseFilterCall
         chartsList.add(new MyLineChart("Overall Incomes and Expenses chart years", LineChartTypes.YEAR, businessActivityList));
         chartsList.add(new MyLineChart("Overall Incomes and Expenses chart months", LineChartTypes.YEAR_AND_MONTH, businessActivityList));
         chartsList.add(new MyLineChart("Overall Incomes and Expenses chart days", LineChartTypes.YEAR_AND_MONTH_AND_DAY, businessActivityList));
-        chartsList.add(new MyPieChart("Incomes VS Expenses", MyPieChartTypes.EXPENSES_VS_INCOMES, businessActivityList));
-        chartsList.add(new MyPieChart("Expenses types", MyPieChartTypes.EXPENSE_TYPES, businessActivityList));
-        chartsList.add(new MyPieChart("Incomes types", MyPieChartTypes.INCOME_TYPES, businessActivityList));
+        //chartsList.add(new MyPieChart("Incomes VS Expenses", MyPieChartTypes.EXPENSES_VS_INCOMES, businessActivityList));
+        //chartsList.add(new MyPieChart("Expenses types", MyPieChartTypes.EXPENSE_TYPES, businessActivityList));
+        //chartsList.add(new MyPieChart("Incomes types", MyPieChartTypes.INCOME_TYPES, businessActivityList));
         chartsFragment.setChartsList(chartsList);
         //listFragment.setBusinessActivityList(businessActivityList.getBusinessActivityListDisplayFilteredSorted(filterManager));
     }

@@ -46,4 +46,22 @@ public class MyLineChart extends MyChart{
                 return date;
         }
     }
+
+    public ArrayList<LinePart> getLineParts() {
+        return lineParts;
+    }
+
+    public MyLineChart setLineParts(ArrayList<LinePart> lineParts) {
+        this.lineParts = lineParts;
+        return this;
+    }
+
+    public LineChartTypes getLineChartType() {
+        return lineChartType;
+    }
+
+    public MyLineChart setLineChartType(LineChartTypes lineChartType) {
+        this.lineChartType = lineChartType;
+        return this;
+    }
 }

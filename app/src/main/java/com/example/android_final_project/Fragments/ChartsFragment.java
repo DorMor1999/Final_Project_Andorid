@@ -3,6 +3,7 @@ package com.example.android_final_project.Fragments;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.android_final_project.Activities.ChartsActivity;
+import com.example.android_final_project.Adapters.ChartAdapter;
 import com.example.android_final_project.Model.MyChart;
 import com.example.android_final_project.R;
 
@@ -21,6 +23,8 @@ public class ChartsFragment extends Fragment {
 
     private RecyclerView charts_LST ;
     private ArrayList<MyChart> chartsList = new ArrayList<>();
+
+    private ChartAdapter chartAdapter;
 
     public void setChartsList(ArrayList<MyChart> list) {
         this.chartsList = list != null ? list : new ArrayList<>();
@@ -45,7 +49,11 @@ public class ChartsFragment extends Fragment {
 
     private void initViews() {
         if (getActivity() instanceof ChartsActivity) {
-            Log.d("Charts fragment", chartsList.toString());
+            chartAdapter = new ChartAdapter(chartsList);
+            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(requireContext());
+            linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
+            charts_LST.setLayoutManager(linearLayoutManager);
+            charts_LST.setAdapter(chartAdapter);
         }
 
     }
