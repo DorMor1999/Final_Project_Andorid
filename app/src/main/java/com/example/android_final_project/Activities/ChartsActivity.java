@@ -14,25 +14,37 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.android_final_project.Enums.BusinessActivityType;
+import com.example.android_final_project.Enums.LineChartTypes;
+import com.example.android_final_project.Enums.MyPieChartTypes;
 import com.example.android_final_project.Enums.SortOptions;
+import com.example.android_final_project.Fragments.ChartsFragment;
 import com.example.android_final_project.Fragments.FilterFragment;
 import com.example.android_final_project.Fragments.NavFragment;
 import com.example.android_final_project.Interfaces.CloseFilterCallback;
 import com.example.android_final_project.Interfaces.DisplayFilterCallback;
 import com.example.android_final_project.Interfaces.GetDataFromDB;
 import com.example.android_final_project.Interfaces.ReqToDB;
+import com.example.android_final_project.Model.BusinessActivity;
 import com.example.android_final_project.Model.BusinessActivityHashMap;
 import com.example.android_final_project.Model.BusinessActivityList;
 import com.example.android_final_project.Model.FilterManager;
+import com.example.android_final_project.Model.MyChart;
+import com.example.android_final_project.Model.MyLineChart;
+import com.example.android_final_project.Model.MyPieChart;
 import com.example.android_final_project.R;
 import com.example.android_final_project.Utilities.DbOperations;
 import com.example.android_final_project.Utilities.DialogUtils;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.util.ArrayList;
+
 public class ChartsActivity extends AppCompatActivity implements CloseFilterCallback, DisplayFilterCallback {
     private FrameLayout charts_FRAME_nav;
     private NavFragment navFragment;
+
+    private FrameLayout charts_FRAME_charts_list;
+    private ChartsFragment chartsFragment;
     private final String TITLE = "Charts";
 
     private LinearLayout charts_buttons_container;
@@ -73,8 +85,11 @@ public class ChartsActivity extends AppCompatActivity implements CloseFilterCall
         //handle click display options
         charts_btn_display_options.setOnClickListener(v -> displayOptions());
 
+        //list fragment
+        chartsFragment = new ChartsFragment();
         // Manage data and handle it in the callback
         manageData();
+        getSupportFragmentManager().beginTransaction().add(R.id.charts_FRAME_charts_list, chartsFragment).commit();
     }
 
     private void manageData() {
@@ -87,10 +102,35 @@ public class ChartsActivity extends AppCompatActivity implements CloseFilterCall
                 businessActivityList.putHashMapDataInList(businessActivityHashMap.getAllActivities());
                 Log.d("data in list", businessActivityList.toString());
                 //doing with the data what i need
+                changeChartsListInFragment(businessActivityList);
+                /*
+                //refresh display
+                businessActivityList.getBusinessActivityListDisplayFilteredSorted(filterManager);
+                ArrayList<MyChart> chartsList = new ArrayList<>();
+                chartsList.add(new MyLineChart("Overall Incomes and Expenses chart years", LineChartTypes.YEAR, businessActivityList));
+                chartsList.add(new MyLineChart("Overall Incomes and Expenses chart months", LineChartTypes.YEAR_AND_MONTH, businessActivityList));
+                chartsList.add(new MyLineChart("Overall Incomes and Expenses chart days", LineChartTypes.YEAR_AND_MONTH_AND_DAY, businessActivityList));
+                chartsList.add(new MyPieChart("Incomes VS Expenses", MyPieChartTypes.EXPENSES_VS_INCOMES, businessActivityList));
+                chartsList.add(new MyPieChart("Expenses types", MyPieChartTypes.EXPENSE_TYPES, businessActivityList));
+                chartsList.add(new MyPieChart("Incomes types", MyPieChartTypes.INCOME_TYPES, businessActivityList));
                 //listFragment.setBusinessActivityList(businessActivityList.getBusinessActivityListDisplayFilteredSorted(filterManager));
-
+                */
             }
         });
+    }
+
+    private void changeChartsListInFragment(BusinessActivityList businessActivityList) {
+        //refresh display
+        businessActivityList.getBusinessActivityListDisplayFilteredSorted(filterManager);
+        ArrayList<MyChart> chartsList = new ArrayList<>();
+        chartsList.add(new MyLineChart("Overall Incomes and Expenses chart years", LineChartTypes.YEAR, businessActivityList));
+        chartsList.add(new MyLineChart("Overall Incomes and Expenses chart months", LineChartTypes.YEAR_AND_MONTH, businessActivityList));
+        chartsList.add(new MyLineChart("Overall Incomes and Expenses chart days", LineChartTypes.YEAR_AND_MONTH_AND_DAY, businessActivityList));
+        chartsList.add(new MyPieChart("Incomes VS Expenses", MyPieChartTypes.EXPENSES_VS_INCOMES, businessActivityList));
+        chartsList.add(new MyPieChart("Expenses types", MyPieChartTypes.EXPENSE_TYPES, businessActivityList));
+        chartsList.add(new MyPieChart("Incomes types", MyPieChartTypes.INCOME_TYPES, businessActivityList));
+        chartsFragment.setChartsList(chartsList);
+        //listFragment.setBusinessActivityList(businessActivityList.getBusinessActivityListDisplayFilteredSorted(filterManager));
     }
 
     private void getDataFromDB(GetDataFromDB callback) {
@@ -118,6 +158,7 @@ public class ChartsActivity extends AppCompatActivity implements CloseFilterCall
         //fragments
         charts_FRAME_nav = findViewById(R.id.charts_FRAME_nav);
         charts_FRAME_filter = findViewById(R.id.charts_FRAME_filter);
+        charts_FRAME_charts_list = findViewById(R.id.charts_FRAME_charts_list);
 
         //buttons part
         charts_btn_display_options = findViewById(R.id.charts_btn_display_options);
