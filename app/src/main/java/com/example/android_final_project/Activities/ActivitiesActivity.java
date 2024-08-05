@@ -142,10 +142,8 @@ public class ActivitiesActivity extends AppCompatActivity implements DeleteClick
             @Override
             public void getData(BusinessActivityHashMap businessActivityHashMap) {
                 // Handle data here first time
-                Log.d("Data in map", businessActivityHashMap.toString());
                 businessActivityList = new BusinessActivityList();
                 businessActivityList.putHashMapDataInList(businessActivityHashMap.getAllActivities());
-                Log.d("data in list", businessActivityList.toString());
                 listFragment.setBusinessActivityList(businessActivityList.getBusinessActivityListDisplayFilteredSorted(filterManager));
                 updateTable();
             }

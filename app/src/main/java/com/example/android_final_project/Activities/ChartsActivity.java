@@ -7,14 +7,9 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.example.android_final_project.Enums.BusinessActivityType;
-import com.example.android_final_project.Enums.LineChartTypes;
 import com.example.android_final_project.Enums.MyPieChartTypes;
 import com.example.android_final_project.Enums.SortOptions;
 import com.example.android_final_project.Fragments.ChartsFragment;
@@ -24,12 +19,9 @@ import com.example.android_final_project.Interfaces.CloseFilterCallback;
 import com.example.android_final_project.Interfaces.DisplayFilterCallback;
 import com.example.android_final_project.Interfaces.GetDataFromDB;
 import com.example.android_final_project.Interfaces.ReqToDB;
-import com.example.android_final_project.Model.BusinessActivity;
 import com.example.android_final_project.Model.BusinessActivityHashMap;
 import com.example.android_final_project.Model.BusinessActivityList;
 import com.example.android_final_project.Model.FilterManager;
-import com.example.android_final_project.Model.MyChart;
-import com.example.android_final_project.Model.MyLineChart;
 import com.example.android_final_project.Model.MyPieChart;
 import com.example.android_final_project.R;
 import com.example.android_final_project.Utilities.DbOperations;
@@ -103,18 +95,6 @@ public class ChartsActivity extends AppCompatActivity implements CloseFilterCall
                 Log.d("data in list", businessActivityList.toString());
                 //doing with the data what i need
                 changeChartsListInFragment(businessActivityList);
-                /*
-                //refresh display
-                businessActivityList.getBusinessActivityListDisplayFilteredSorted(filterManager);
-                ArrayList<MyChart> chartsList = new ArrayList<>();
-                chartsList.add(new MyLineChart("Overall Incomes and Expenses chart years", LineChartTypes.YEAR, businessActivityList));
-                chartsList.add(new MyLineChart("Overall Incomes and Expenses chart months", LineChartTypes.YEAR_AND_MONTH, businessActivityList));
-                chartsList.add(new MyLineChart("Overall Incomes and Expenses chart days", LineChartTypes.YEAR_AND_MONTH_AND_DAY, businessActivityList));
-                chartsList.add(new MyPieChart("Incomes VS Expenses", MyPieChartTypes.EXPENSES_VS_INCOMES, businessActivityList));
-                chartsList.add(new MyPieChart("Expenses types", MyPieChartTypes.EXPENSE_TYPES, businessActivityList));
-                chartsList.add(new MyPieChart("Incomes types", MyPieChartTypes.INCOME_TYPES, businessActivityList));
-                //listFragment.setBusinessActivityList(businessActivityList.getBusinessActivityListDisplayFilteredSorted(filterManager));
-                */
             }
         });
     }
@@ -122,15 +102,11 @@ public class ChartsActivity extends AppCompatActivity implements CloseFilterCall
     private void changeChartsListInFragment(BusinessActivityList businessActivityList) {
         //refresh display
         businessActivityList.getBusinessActivityListDisplayFilteredSorted(filterManager);
-        ArrayList<MyChart> chartsList = new ArrayList<>();
-        chartsList.add(new MyLineChart("Overall Incomes and Expenses chart years", LineChartTypes.YEAR, businessActivityList));
-        chartsList.add(new MyLineChart("Overall Incomes and Expenses chart months", LineChartTypes.YEAR_AND_MONTH, businessActivityList));
-        chartsList.add(new MyLineChart("Overall Incomes and Expenses chart days", LineChartTypes.YEAR_AND_MONTH_AND_DAY, businessActivityList));
-        //chartsList.add(new MyPieChart("Incomes VS Expenses", MyPieChartTypes.EXPENSES_VS_INCOMES, businessActivityList));
-        //chartsList.add(new MyPieChart("Expenses types", MyPieChartTypes.EXPENSE_TYPES, businessActivityList));
-        //chartsList.add(new MyPieChart("Incomes types", MyPieChartTypes.INCOME_TYPES, businessActivityList));
+        ArrayList<MyPieChart> chartsList = new ArrayList<>();
+        chartsList.add(new MyPieChart("Incomes VS Expenses", MyPieChartTypes.EXPENSES_VS_INCOMES, businessActivityList));
+        chartsList.add(new MyPieChart("Expenses types", MyPieChartTypes.EXPENSE_TYPES, businessActivityList));
+        chartsList.add(new MyPieChart("Incomes types", MyPieChartTypes.INCOME_TYPES, businessActivityList));
         chartsFragment.setChartsList(chartsList);
-        //listFragment.setBusinessActivityList(businessActivityList.getBusinessActivityListDisplayFilteredSorted(filterManager));
     }
 
     private void getDataFromDB(GetDataFromDB callback) {
@@ -198,7 +174,7 @@ public class ChartsActivity extends AppCompatActivity implements CloseFilterCall
                 .setBusinessActivityType(businessActivityType)
                 .setSortOption(sortOption);
         //doing with the data what i need
-        //listFragment.setBusinessActivityList(businessActivityList.getBusinessActivityListDisplayFilteredSorted(filterManager));
+        changeChartsListInFragment(businessActivityList);
     }
 
     private void closeFilterFrag() {

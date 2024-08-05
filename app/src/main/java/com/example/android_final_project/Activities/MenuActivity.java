@@ -14,7 +14,6 @@ public class MenuActivity extends AppCompatActivity  {
 
     private FrameLayout menu_FRAME_nav;
     private Button menu_BTN_add_activity;
-    private Button menu_BTN_add_activities;
     private Button menu_BTN_show_activities;
     private Button menu_BTN_show_charts;
     private NavFragment navFragment;
@@ -63,7 +62,6 @@ public class MenuActivity extends AppCompatActivity  {
     private void findViews() {
         menu_FRAME_nav = findViewById(R.id.menu_FRAME_nav);
         menu_BTN_add_activity = findViewById(R.id.menu_BTN_add_activity);
-        menu_BTN_add_activities = findViewById(R.id.menu_BTN_add_activities);
         menu_BTN_show_activities = findViewById(R.id.menu_BTN_show_activities);
         menu_BTN_show_charts = findViewById(R.id.menu_BTN_show_charts);
     }

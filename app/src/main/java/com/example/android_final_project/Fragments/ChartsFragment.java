@@ -6,14 +6,13 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.android_final_project.Activities.ChartsActivity;
 import com.example.android_final_project.Adapters.ChartAdapter;
-import com.example.android_final_project.Model.MyChart;
+import com.example.android_final_project.Model.MyPieChart;
 import com.example.android_final_project.R;
 
 import java.util.ArrayList;
@@ -22,11 +21,11 @@ import java.util.ArrayList;
 public class ChartsFragment extends Fragment {
 
     private RecyclerView charts_LST ;
-    private ArrayList<MyChart> chartsList = new ArrayList<>();
+    private ArrayList<MyPieChart> chartsList = new ArrayList<>();
 
     private ChartAdapter chartAdapter;
 
-    public void setChartsList(ArrayList<MyChart> list) {
+    public void setChartsList(ArrayList<MyPieChart> list) {
         this.chartsList = list != null ? list : new ArrayList<>();
         initViews();
     }

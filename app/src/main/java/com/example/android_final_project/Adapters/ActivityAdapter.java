@@ -45,9 +45,6 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.Activi
     @Override
     public void onBindViewHolder(@NonNull ActivityViewHolder holder, int position) {
         BusinessActivity businessActivity = getItem(position);
-
-        Log.d("Adapter", "Binding data at position " + position + ": " + businessActivity.toString());
-
         // Bind the businessActivity data to the views
         holder.date_tv_list_item.setText(businessActivity.getDate());
         holder.description_tv_list_item.setText("Description: " + businessActivity.getDescription());

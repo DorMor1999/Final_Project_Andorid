@@ -54,11 +54,6 @@ public class ListFragment extends Fragment {
 
     private void initViews() {
         if (getActivity() instanceof ActivitiesActivity) {
-            // Safe to use context here
-
-            Log.d("ListFragment", "initViews called");
-            Log.d("ListFragment", "Adapter data: " + businessActivityList.toString());
-
             activityAdapter = new ActivityAdapter(businessActivityList, new ActivityAdapter.OnItemClickListener() {
                 @Override
                 public void onDeleteClick(String item_id) {

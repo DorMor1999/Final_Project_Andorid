@@ -4,12 +4,13 @@ import com.example.android_final_project.Enums.MyPieChartTypes;
 
 import java.util.ArrayList;
 
-public class MyPieChart extends MyChart{
+public class MyPieChart{
+    private String title;
     private ArrayList<PiePart> pieParts = new ArrayList<>();
     private MyPieChartTypes myPieChartType;
 
     public MyPieChart(String title, MyPieChartTypes myPieChartType,BusinessActivityList businessActivityList ) {
-        super(title);
+        this.title = title;
         this.myPieChartType = myPieChartType;
         decideHowToReloadPieParts(businessActivityList);
     }
@@ -64,6 +65,15 @@ public class MyPieChart extends MyChart{
 
     public MyPieChart setMyPieChartType(MyPieChartTypes myPieChartType) {
         this.myPieChartType = myPieChartType;
+        return this;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public MyPieChart setTitle(String title) {
+        this.title = title;
         return this;
     }
 }

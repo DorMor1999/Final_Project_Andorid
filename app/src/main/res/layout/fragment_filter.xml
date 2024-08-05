@@ -4,16 +4,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Fragments.FilterFragment"
-    android:padding="16dp"
-    android:background="@android:color/white">
+    android:padding="@dimen/padding_16_def"
+    android:background="?android:attr/windowBackground">
 
     <!-- Checkbox for Filter by Date -->
     <CheckBox
         android:id="@+id/filter_frame_date_checkbox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Filter by Date"
-        android:textSize="16sp"
+        android:text="@string/filter_by_date_string"
+        android:textSize="@dimen/_16sp"
         android:textColor="@android:color/black"
         android:layout_alignParentStart="true" />
 
@@ -39,7 +39,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Date From"
-                android:textSize="16sp"
+                android:textSize="@dimen/_16sp"
                 android:textColor="@android:color/black" />
 
             <EditText
@@ -65,7 +65,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Date To"
-                android:textSize="16sp"
+                android:textSize="@dimen/_16sp"
                 android:textColor="@android:color/black" />
 
             <EditText
@@ -86,7 +86,7 @@
         android:layout_height="wrap_content"
         android:text="The 'From' date must be before or equal to the 'To' date."
         android:textColor="@android:color/holo_red_dark"
-        android:textSize="14sp"
+        android:textSize="@dimen/error_text_size_filterFragment"
         android:visibility="gone"
         android:layout_below="@id/filter_frame_date_container"
         android:layout_marginTop="4dp"
@@ -98,7 +98,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Filter by Price"
-        android:textSize="16sp"
+        android:textSize="@dimen/_16sp"
         android:textColor="@android:color/black"
         android:layout_below="@id/filter_frame_date_error"
         android:layout_marginTop="16dp"
@@ -110,7 +110,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Price Range"
-        android:textSize="16sp"
+        android:textSize="@dimen/_16sp"
         android:textColor="@android:color/black"
         android:layout_below="@id/filter_frame_price_checkbox"
         android:layout_marginTop="16dp"
@@ -152,7 +152,7 @@
         android:layout_height="wrap_content"
         android:text="Minimum price must be less than or equal to the maximum price."
         android:textColor="@android:color/holo_red_dark"
-        android:textSize="14sp"
+        android:textSize="@dimen/error_text_size_filterFragment"
         android:visibility="gone"
         android:layout_below="@id/filter_frame_price_range_layout"
         android:layout_marginTop="4dp"
@@ -164,7 +164,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Type"
-        android:textSize="16sp"
+        android:textSize="@dimen/_16sp"
         android:textColor="@android:color/black"
         android:layout_below="@id/filter_frame_price_error"
         android:layout_marginTop="16dp" />
@@ -182,7 +182,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Expense"
-            android:textSize="16sp"
+            android:textSize="@dimen/_16sp"
             android:layout_marginEnd="16dp" />
 
         <RadioButton
@@ -190,7 +190,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Income"
-            android:textSize="16sp"
+            android:textSize="@dimen/_16sp"
             android:layout_marginEnd="16dp" />
 
         <RadioButton
@@ -198,7 +198,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Both"
-            android:textSize="16sp" />
+            android:textSize="@dimen/_16sp" />
     </RadioGroup>
 
     <!-- Spinner for Sort Options -->

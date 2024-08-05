@@ -25,6 +25,16 @@
     <string name="submit_text">Submit</string>
     <string name="display_options_string">Display options</string>
     <string name="_0_string">0</string>
+    <string name="overall_string">Overall:</string>
+    <string name="expenses_string">Expenses:</string>
+    <string name="incomes_string">Incomes:</string>
+    <string name="date_string_temp">Date</string>
+    <string name="title_string_temp">Title</string>
+    <string name="delete_string">Delete</string>
+    <string name="price">Price:</string>
+    <string name="type">Type:</string>
+    <string name="description">Description:</string>
+    <string name="filter_by_date_string">Filter by Date</string>
     <string-array name="type_expense_array">
         <item>Housing</item>
         <item>Utilities</item>

@@ -32,17 +32,10 @@
             android:text="@string/add_activity_string"
             android:backgroundTint="@color/application_icon_blue"
             android:textSize="@dimen/menu_BTNS_text_size"
-            android:layout_margin="@dimen/menu_buttons_margin" />
+            android:layout_margin="@dimen/menu_buttons_margin"
+            />
 
-        <Button
-            android:id="@+id/menu_BTN_add_activities"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:text="@string/add_activities_string"
-            android:backgroundTint="@color/application_icon_blue"
-            android:textSize="@dimen/menu_BTNS_text_size"
-            android:layout_margin="@dimen/menu_buttons_margin" />
+
 
         <Button
             android:id="@+id/menu_BTN_show_activities"

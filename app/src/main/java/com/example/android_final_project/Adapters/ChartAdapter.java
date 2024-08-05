@@ -1,46 +1,31 @@
 package com.example.android_final_project.Adapters;
 
-import android.util.Log;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.anychart.AnyChart;
-import com.anychart.AnyChartView;
-import com.anychart.chart.common.dataentry.DataEntry;
 import com.anychart.chart.common.dataentry.ValueDataEntry;
-import com.anychart.chart.common.listener.Event;
-import com.anychart.chart.common.listener.ListenersInterface;
-import com.anychart.charts.Cartesian;
-import com.anychart.charts.Pie;
-import com.anychart.core.cartesian.series.Line;
-import com.anychart.data.Mapping;
-import com.anychart.data.Set;
-import com.anychart.enums.Align;
-import com.anychart.enums.LegendLayout;
-import com.anychart.enums.TooltipPositionMode;
-import com.anychart.graphics.vector.Stroke;
-import com.example.android_final_project.Activities.ChartsActivity;
-import com.example.android_final_project.Model.LinePart;
-import com.example.android_final_project.Model.MyChart;
-import com.example.android_final_project.Model.MyLineChart;
 import com.example.android_final_project.Model.MyPieChart;
 import com.example.android_final_project.Model.PiePart;
 import com.example.android_final_project.R;
+import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.formatter.PercentFormatter;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class ChartAdapter extends RecyclerView.Adapter<ChartAdapter.ChartViewHolder>{
 
-    private final ArrayList<MyChart> charts_list;
+    private final ArrayList<MyPieChart> charts_list;
 
-    public ChartAdapter(ArrayList<MyChart> charts_list) {
+    public ChartAdapter(ArrayList<MyPieChart> charts_list) {
         this.charts_list = charts_list;
 
     }
@@ -54,81 +39,44 @@ public class ChartAdapter extends RecyclerView.Adapter<ChartAdapter.ChartViewHol
 
     @Override
     public void onBindViewHolder(@NonNull ChartViewHolder holder, int position) {
-        MyChart myChart = getItem(position);
 
-        if (holder.any_chart_view == null) {
-            Log.e("ChartAdapter", "AnyChartView is null in position: " + position);
-            return;
+
+        MyPieChart myPieChart = getItem(position);
+
+        holder.title_chart_tv.setText(myPieChart.getTitle());
+
+        int[] customColors = {
+                Color.rgb(255, 99, 132), // Example color 1
+                Color.rgb(54, 162, 235), // Example color 2
+                Color.rgb(255, 206, 86), // Example color 3
+                Color.rgb(75, 192, 192), // Example color 4
+                Color.rgb(153, 102, 255) // Example color 5
+        };
+
+
+
+        ArrayList<PieEntry> entries = new ArrayList<>();
+        for (PiePart currentPiePart: myPieChart.getPieParts()) {
+            entries.add(new PieEntry((float) currentPiePart.getAmount(), currentPiePart.getName()));
         }
 
-        if (myChart instanceof MyPieChart){
-            Pie pie = AnyChart.pie();
-            /*
-            holder.any_chart_view.setProgressBar(holder.progressBar);
+        PieDataSet pieDataSet = new PieDataSet(entries,"");
+        pieDataSet.setColors(customColors);
 
-            pie.setOnClickListener(new ListenersInterface.OnClickListener(new String[]{"x", "value"}) {
-                @Override
-                public void onClick(Event event) {
-                    Toast.makeText(holder.itemView.getContext(), event.getData().get("x") + ":" + event.getData().get("value"), Toast.LENGTH_SHORT).show();
-                }
-            });*/
-            List<DataEntry> data = new ArrayList<>();
-            MyPieChart myPieChart = (MyPieChart)myChart;
-            for (PiePart  currentPiePart: myPieChart.getPieParts())
-            {
-                data.add(new ValueDataEntry(currentPiePart.getName(), currentPiePart.getAmount()));
-            }
-            pie.data(data);
+        // Create PieData object
+        PieData pieData = new PieData(pieDataSet);
 
-            pie.title(myChart.getTitle());
+        // Set value formatter to show percentages
+        pieData.setValueFormatter(new PercentFormatter());
 
-            pie.labels().position("outside");
+        // Optionally set the value text size and color
+        pieDataSet.setValueTextSize(12f); // Adjust text size as needed
+        pieDataSet.setValueTextColor(Color.BLACK); // Adjust text color as needed
 
-            holder.any_chart_view.setChart(pie);
-            }
-        else{
-            Cartesian cartesian = AnyChart.line();
-
-            cartesian.animation(true);
-
-            cartesian.padding(10d, 20d, 5d, 20d);
-
-            cartesian.crosshair().enabled(true);
-            cartesian.crosshair()
-                    .yLabel(true)
-                    // TODO ystroke
-                    .yStroke((Stroke) null, null, null, (String) null, (String) null);
-
-            cartesian.tooltip().positionMode(TooltipPositionMode.POINT);
-
-            cartesian.title(myChart.getTitle());
-
-            cartesian.yAxis(0).title("Money");
-            cartesian.xAxis(0).labels().padding(5d, 5d, 5d, 5d);
-
-            MyLineChart myLineChart = (MyLineChart) myChart;
-            List<DataEntry> seriesData = new ArrayList<>();
-            for (LinePart currentLinePart: myLineChart.getLineParts())
-            {
-                seriesData.add(new CustomDataEntry(currentLinePart.getDate(), currentLinePart.getOverall(), currentLinePart.getIncomes(), currentLinePart.getExpenses()));
-            }
-            Set set = Set.instantiate();
-            set.data(seriesData);
-
-            Mapping series1Mapping = set.mapAs("{ x: 'x', value: 'value' }");
-            Mapping series2Mapping = set.mapAs("{ x: 'x', value: 'value2' }");
-            Mapping series3Mapping = set.mapAs("{ x: 'x', value: 'value3' }");
-
-            Line series1 = cartesian.line(series1Mapping);
-            series1.name("Overall");
-
-            Line series2 = cartesian.line(series2Mapping);
-            series2.name("Incomes");
-
-            Line series3 = cartesian.line(series3Mapping);
-            series3.name("Expenses");
-            holder.any_chart_view.setChart(cartesian);
-        }
+        holder.chart_pie.setData(pieData);
+        holder.chart_pie.getDescription().setEnabled(false);
+        holder.chart_pie.animateY(1000);
+        holder.chart_pie.invalidate();
     }
 
     @Override
@@ -136,30 +84,20 @@ public class ChartAdapter extends RecyclerView.Adapter<ChartAdapter.ChartViewHol
         return charts_list.size();
     }
 
-    private MyChart getItem(int position) {
+    private MyPieChart getItem(int position) {
         return charts_list.get(position);
-    }
-
-    private class CustomDataEntry extends ValueDataEntry {
-
-        CustomDataEntry(String x, Number value, Number value2, Number value3) {
-            super(x, value);
-            setValue("value2", value2);
-            setValue("value3", value3);
-        }
-
     }
 
 
     public static class ChartViewHolder extends RecyclerView.ViewHolder {
 
-        private final AnyChartView any_chart_view;
-        //private final ProgressBar progressBar;
+        private TextView title_chart_tv;
+        private PieChart chart_pie;
 
         public ChartViewHolder(@NonNull View itemView) {
             super(itemView);
-            any_chart_view = itemView.findViewById(R.id.any_chart_view);
-            //progressBar = itemView.findViewById(R.id.progress_bar);
+            chart_pie = itemView.findViewById(R.id.chart_pie);
+            title_chart_tv = itemView.findViewById(R.id.title_chart_tv);
         }
     }
 }

@@ -20,4 +20,13 @@
     <dimen name="_32dp">32dp</dimen>
     <dimen name="card_elevation">4dp</dimen>
     <dimen name="_16dp">16dp</dimen>
+    <dimen name="chart_title_size">18sp</dimen>
+    <dimen name="table_text_size">16sp</dimen>
+    <dimen name="card_date_text_size">16sp</dimen>
+    <dimen name="_title_card_size_text">18sp</dimen>
+    <dimen name="margin_end_from_date_card">8dp</dimen>
+    <dimen name="margin_top_tvs_in_card">4dp</dimen>
+    <dimen name="price_card_text_size">16sp</dimen>
+    <dimen name="padding_16_def">16dp</dimen>
+    <dimen name="error_text_size_filterFragment">14sp</dimen>
 </resources>
