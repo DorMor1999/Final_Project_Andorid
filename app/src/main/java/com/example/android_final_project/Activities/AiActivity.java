@@ -1,12 +1,15 @@
 package com.example.android_final_project.Activities;
 
 import android.os.Bundle;
+import android.text.Html;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,16 +27,27 @@ import com.example.android_final_project.Interfaces.CloseFilterCallback;
 import com.example.android_final_project.Interfaces.DisplayFilterCallback;
 import com.example.android_final_project.Interfaces.GetDataFromDB;
 import com.example.android_final_project.Interfaces.ReqToDB;
+import com.example.android_final_project.Model.BusinessActivity;
 import com.example.android_final_project.Model.BusinessActivityHashMap;
 import com.example.android_final_project.Model.BusinessActivityList;
+import com.example.android_final_project.Model.Expense;
 import com.example.android_final_project.Model.FilterManager;
+import com.example.android_final_project.Model.Income;
 import com.example.android_final_project.Model.MyPieChart;
 import com.example.android_final_project.R;
 import com.example.android_final_project.Utilities.DbOperations;
 import com.example.android_final_project.Utilities.DialogUtils;
+import com.example.android_final_project.Utilities.GroqApiClient;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import org.commonmark.parser.Parser;
+import org.commonmark.renderer.html.HtmlRenderer;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class AiActivity extends AppCompatActivity implements CloseFilterCallback, DisplayFilterCallback {
@@ -54,6 +68,9 @@ public class AiActivity extends AppCompatActivity implements CloseFilterCallback
     private TextView ai_description_tv;
     private Button ai_btn_ask;
     private TextView ai_response_tv;
+    private ScrollView ai_scroll_view;
+
+    private GroqApiClient groqApiClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +79,7 @@ public class AiActivity extends AppCompatActivity implements CloseFilterCallback
 
         dialogUtils = new DialogUtils();
         startInitFilterManager();
+        groqApiClient = new GroqApiClient();
 
         findViews();
         initViews();
@@ -85,6 +103,46 @@ public class AiActivity extends AppCompatActivity implements CloseFilterCallback
 
         // Manage data and handle it in the callback
         manageData();
+
+        //handle click Ask ai
+        ai_btn_ask.setOnClickListener(v -> askAi());
+    }
+
+    private void askAi() {
+        JSONArray financialData;
+        try {
+            financialData = convertListToJsonArray(businessActivityList.getBusinessActivityListDisplay());
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return;
+        }
+
+        // Construct your message with the question and include the data
+        String userMessage = "Given the following financial data, what recommendations can you give to economize and reduce unnecessary expenses?";
+
+        // Pass both userMessage and financialData to the GroqApiClient
+        groqApiClient.chatCompletion(userMessage, financialData, new GroqApiClient.ChatCompletionCallback() {
+            @Override
+            public void onResponse(String response) {
+                runOnUiThread(() -> {
+                    // Ensure the scroll is visible
+                    ai_scroll_view.setVisibility(View.VISIBLE);
+
+                    // Convert markdown to HTML
+                    Parser parser = Parser.builder().build();
+                    HtmlRenderer renderer = HtmlRenderer.builder().build();
+                    String htmlContent = renderer.render(parser.parse(response));
+
+                    // Set the text from the response
+                    ai_response_tv.setText(Html.fromHtml(htmlContent, Html.FROM_HTML_MODE_LEGACY));
+                });
+            }
+
+            @Override
+            public void onFailure(IOException e) {
+                dialogUtils.showDialog(AiActivity.this, "Ai Error", "Something went wrong, try again later.", null);
+            }
+        });
     }
 
     private void manageData() {
@@ -124,6 +182,7 @@ public class AiActivity extends AppCompatActivity implements CloseFilterCallback
 
     private void displayOptions() {
         ai_buttons_container.setVisibility(View.GONE);
+        ai_ai_container.setVisibility(View.GONE);
         ai_FRAME_filter.setVisibility(View.VISIBLE);
     }
 
@@ -142,6 +201,7 @@ public class AiActivity extends AppCompatActivity implements CloseFilterCallback
         ai_description_tv = findViewById(R.id.ai_description_tv);
         ai_btn_ask = findViewById(R.id.ai_btn_ask);
         ai_response_tv = findViewById(R.id.ai_response_tv);
+        ai_scroll_view = findViewById(R.id.ai_scroll_view);
     }
 
     private void startInitFilterManager() {
@@ -177,7 +237,33 @@ public class AiActivity extends AppCompatActivity implements CloseFilterCallback
     }
 
     private void closeFilterFrag() {
+        ai_ai_container.setVisibility(View.VISIBLE);
         ai_buttons_container.setVisibility(View.VISIBLE);
         ai_FRAME_filter.setVisibility(View.GONE);
+    }
+
+
+    private JSONArray convertListToJsonArray(ArrayList<BusinessActivity> activities) throws JSONException {
+        JSONArray jsonArray = new JSONArray();
+
+        for (BusinessActivity activity : activities) {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("id", activity.getId());
+            jsonObject.put("description", activity.getDescription());
+            jsonObject.put("date", activity.getDate());
+            jsonObject.put("price", activity.getPrice());
+
+            if (activity instanceof Expense) {
+                jsonObject.put("type", "expense");
+                jsonObject.put("expenseType", ((Expense) activity).getExpenseTypeString());
+            } else if (activity instanceof Income) {
+                jsonObject.put("type", "income");
+                jsonObject.put("incomeType", ((Income) activity).getIncomeTypeString());
+            }
+
+            jsonArray.put(jsonObject);
+        }
+
+        return jsonArray;
     }
 }

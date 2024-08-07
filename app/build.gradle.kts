@@ -62,4 +62,7 @@ dependencies {
     //Groq ai api
     implementation ("com.squareup.okhttp3:okhttp:4.10.0")
 
+    //markdown
+    implementation ("org.commonmark:commonmark:0.21.0")
+
 }

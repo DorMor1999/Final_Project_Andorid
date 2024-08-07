@@ -81,13 +81,26 @@
                 android:textColor="@android:color/white"
                 android:layout_marginVertical="@dimen/margin_inside_ai_container" />
 
-            <TextView
-                android:id="@+id/ai_response_tv"
+
+            <ScrollView
+                android:id="@+id/ai_scroll_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text=""
+                android:padding="16dp"
                 android:visibility="gone"
-                android:layout_marginVertical="@dimen/margin_inside_ai_container"/>
+                android:layout_marginVertical="@dimen/margin_inside_ai_container">
+
+                <TextView
+                    android:id="@+id/ai_response_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textSize="16sp"
+                    android:padding="4dp"
+                    android:scrollbars="vertical" />
+            </ScrollView>
+
+
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>

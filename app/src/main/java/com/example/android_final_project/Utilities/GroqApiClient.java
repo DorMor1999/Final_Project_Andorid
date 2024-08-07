@@ -25,14 +25,14 @@ public class GroqApiClient{
         void onFailure(IOException e);
     }
 
-    public void chatCompletion(String userMessage, ChatCompletionCallback callback) {
+    public void chatCompletion(String userMessage, JSONArray financialData, ChatCompletionCallback callback) {
         JSONObject jsonBody = new JSONObject();
         try {
             jsonBody.put("model", "llama3-70b-8192");
             JSONArray messages = new JSONArray();
             JSONObject message = new JSONObject();
             message.put("role", "user");
-            message.put("content", userMessage);
+            message.put("content", userMessage + "\n" + "Financial Data: " + financialData.toString());
             messages.put(message);
             jsonBody.put("messages", messages);
         } catch (JSONException e) {
