@@ -65,10 +65,10 @@ public class FilterFragment extends Fragment {
     private CloseFilterCallback listenerClose;
     private DisplayFilterCallback listenerDisplay;
     private Validators validators;
-    private boolean isChartsActivity = false;
+    private boolean isActivitiesActivity = false;
 
-    public void setIsChartsActivity(boolean isChartsActivity){
-        this.isChartsActivity = isChartsActivity;
+    public void setIsActivitiesActivity(boolean isActivitiesActivity){
+        this.isActivitiesActivity = isActivitiesActivity;
     }
 
     public void setCloseFilterCallback(CloseFilterCallback listenerClose) {
@@ -119,7 +119,7 @@ public class FilterFragment extends Fragment {
         filter_frame_rb_both.setChecked(true);
         setupListenerRadioGroup();
 
-        if (isChartsActivity){
+        if (!isActivitiesActivity){
             filter_frame_sort_spinner.setVisibility(View.GONE);
             filter_frame_sort_label.setVisibility(View.GONE);
         }
@@ -177,7 +177,7 @@ public class FilterFragment extends Fragment {
         }
 
         if (formIsOk && listenerDisplay != null){
-            if (isChartsActivity){
+            if (!isActivitiesActivity){
                 sortOption = DATE_LOW_TO_HIGH;
             }
             listenerDisplay.onButtonClickedDisplay(filter_frame_date_checkbox.isChecked(), filter_frame_date_picker_from.getText().toString(), filter_frame_date_picker_to.getText().toString(), filter_frame_price_checkbox.isChecked(), min, max, type, sortOption );

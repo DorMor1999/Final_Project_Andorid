@@ -35,6 +35,9 @@
     <string name="type">Type:</string>
     <string name="description">Description:</string>
     <string name="filter_by_date_string">Filter by Date</string>
+    <string name="ask_ai_menu_btn_text">Ask Ai</string>
+    <string name="ai_description_tv_text">After you click the \'Ask AI\' button, the AI will give you financial recommendations based on your filtered data.</string>
+    <string name="ask_ai_btn_string">Ask Ai</string>
     <string-array name="type_expense_array">
         <item>Housing</item>
         <item>Utilities</item>

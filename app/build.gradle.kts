@@ -58,4 +58,8 @@ dependencies {
 
     //Firebase DB
     implementation(libs.firebase.database)
+
+    //Groq ai api
+    implementation ("com.squareup.okhttp3:okhttp:4.10.0")
+
 }

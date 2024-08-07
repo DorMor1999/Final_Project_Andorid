@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activities.AiActivity">
+
+    <FrameLayout
+        android:id="@+id/ai_FRAME_nav"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/nav_high"
+        android:background="@color/application_icon_blue"/>
+
+    <LinearLayout
+        android:id="@+id/ai_buttons_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_def_16"
+        android:layout_marginHorizontal="@dimen/margin_def_16"
+        android:orientation="horizontal"
+        android:layout_below="@id/ai_FRAME_nav">
+
+        <!-- Display options button -->
+        <Button
+            android:id="@+id/ai_btn_display_options"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="@string/display_options_string"
+            android:textAllCaps="false"
+            android:backgroundTint="@color/black"
+            android:textColor="@android:color/white"
+            />
+
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/ai_FRAME_filter"
+        android:layout_below="@id/ai_FRAME_nav"
+        android:layout_marginTop="@dimen/_16dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        />
+
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/ai_ai_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ai_buttons_container"
+        android:layout_marginHorizontal="@dimen/_16dp"
+        android:layout_marginTop="@dimen/_32dp"
+        app:cardCornerRadius="@dimen/_32dp"
+        app:cardElevation="@dimen/card_elevation"
+        app:cardUseCompatPadding="true"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/margin_inside_ai_container">
+
+            <TextView
+                android:id="@+id/ai_description_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/ai_description_tv_text"
+                android:layout_marginVertical="@dimen/margin_inside_ai_container" />
+
+            <Button
+                android:id="@+id/ai_btn_ask"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/ask_ai_btn_string"
+                android:textAllCaps="false"
+                android:backgroundTint="@color/application_icon_blue"
+                android:textColor="@android:color/white"
+                android:layout_marginVertical="@dimen/margin_inside_ai_container" />
+
+            <TextView
+                android:id="@+id/ai_response_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:visibility="gone"
+                android:layout_marginVertical="@dimen/margin_inside_ai_container"/>
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+
+
+
+
+
+
+</RelativeLayout>

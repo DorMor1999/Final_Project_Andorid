@@ -55,6 +55,16 @@
             android:backgroundTint="@color/application_icon_blue"
             android:textSize="@dimen/menu_BTNS_text_size"
             android:layout_margin="@dimen/menu_buttons_margin" />
+
+        <Button
+            android:id="@+id/menu_BTN_ai"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:text="@string/ask_ai_menu_btn_text"
+            android:backgroundTint="@color/application_icon_blue"
+            android:textSize="@dimen/menu_BTNS_text_size"
+            android:layout_margin="@dimen/menu_buttons_margin" />
     </LinearLayout>
 
 

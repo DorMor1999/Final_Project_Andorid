@@ -16,6 +16,7 @@ public class MenuActivity extends AppCompatActivity  {
     private Button menu_BTN_add_activity;
     private Button menu_BTN_show_activities;
     private Button menu_BTN_show_charts;
+    private Button menu_BTN_ai;
     private NavFragment navFragment;
     private final String TITLE = "Menu";
 
@@ -36,9 +37,16 @@ public class MenuActivity extends AppCompatActivity  {
         menu_BTN_add_activity.setOnClickListener(v -> moveToAddActivity());
         menu_BTN_show_activities.setOnClickListener(v -> moveToActivitiesActivity());
         menu_BTN_show_charts.setOnClickListener(v -> moveToChartsActivity());
+        menu_BTN_ai.setOnClickListener(v -> moveToAiActivity());
 
         // Show fragment
         getSupportFragmentManager().beginTransaction().add(R.id.menu_FRAME_nav, navFragment).commit();
+    }
+
+    private void moveToAiActivity() {
+        Intent i = new Intent(this, AiActivity.class);
+        startActivity(i);
+        finish();
     }
 
     private void moveToChartsActivity() {
@@ -64,5 +72,6 @@ public class MenuActivity extends AppCompatActivity  {
         menu_BTN_add_activity = findViewById(R.id.menu_BTN_add_activity);
         menu_BTN_show_activities = findViewById(R.id.menu_BTN_show_activities);
         menu_BTN_show_charts = findViewById(R.id.menu_BTN_show_charts);
+        menu_BTN_ai = findViewById(R.id.menu_BTN_ai);
     }
 }

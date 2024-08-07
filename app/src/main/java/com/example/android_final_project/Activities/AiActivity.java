@@ -6,13 +6,18 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
+import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 
 import com.example.android_final_project.Enums.BusinessActivityType;
 import com.example.android_final_project.Enums.MyPieChartTypes;
 import com.example.android_final_project.Enums.SortOptions;
-import com.example.android_final_project.Fragments.ChartsFragment;
 import com.example.android_final_project.Fragments.FilterFragment;
 import com.example.android_final_project.Fragments.NavFragment;
 import com.example.android_final_project.Interfaces.CloseFilterCallback;
@@ -31,57 +36,55 @@ import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 
-public class ChartsActivity extends AppCompatActivity implements CloseFilterCallback, DisplayFilterCallback {
-    private FrameLayout charts_FRAME_nav;
+public class AiActivity extends AppCompatActivity implements CloseFilterCallback, DisplayFilterCallback {
+
+    private FrameLayout ai_FRAME_nav;
     private NavFragment navFragment;
+    private final String TITLE = "Ai";
 
-    private FrameLayout charts_FRAME_charts_list;
-    private ChartsFragment chartsFragment;
-    private final String TITLE = "Charts";
-
-    private LinearLayout charts_buttons_container;
-    private Button charts_btn_display_options;
+    private LinearLayout ai_buttons_container;
+    private Button ai_btn_display_options;
     private DialogUtils dialogUtils;
     private BusinessActivityList businessActivityList;
-    private FrameLayout charts_FRAME_filter;
+    private FrameLayout ai_FRAME_filter;
     private FilterFragment filterFragment;
     private FilterManager filterManager;
+
+    private CardView ai_ai_container;
+    private TextView ai_description_tv;
+    private Button ai_btn_ask;
+    private TextView ai_response_tv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_charts);
+        setContentView(R.layout.activity_ai);
 
         dialogUtils = new DialogUtils();
         startInitFilterManager();
-
 
         findViews();
         initViews();
     }
 
     private void initViews() {
-
         //nav fragment
         navFragment = new NavFragment();
         navFragment.setTextNavTitle(TITLE);
-        getSupportFragmentManager().beginTransaction().add(R.id.charts_FRAME_nav, navFragment).commit();
+        getSupportFragmentManager().beginTransaction().add(R.id.ai_FRAME_nav, navFragment).commit();
 
         //filter fragment
         filterFragment = new FilterFragment();
         filterFragment.setCloseFilterCallback(this);
         filterFragment.setDisplayFilterCallback(this);
         filterFragment.setIsActivitiesActivity(false);
-        getSupportFragmentManager().beginTransaction().add(R.id.charts_FRAME_filter, filterFragment).commit();
+        getSupportFragmentManager().beginTransaction().add(R.id.ai_FRAME_filter, filterFragment).commit();
 
         //handle click display options
-        charts_btn_display_options.setOnClickListener(v -> displayOptions());
+        ai_btn_display_options.setOnClickListener(v -> displayOptions());
 
-        //list fragment
-        chartsFragment = new ChartsFragment();
         // Manage data and handle it in the callback
         manageData();
-        getSupportFragmentManager().beginTransaction().add(R.id.charts_FRAME_charts_list, chartsFragment).commit();
     }
 
     private void manageData() {
@@ -92,19 +95,15 @@ public class ChartsActivity extends AppCompatActivity implements CloseFilterCall
                 businessActivityList = new BusinessActivityList();
                 businessActivityList.putHashMapDataInList(businessActivityHashMap.getAllActivities());
                 //doing with the data what i need
-                changeChartsListInFragment(businessActivityList);
+                filterData(businessActivityList);
             }
         });
     }
 
-    private void changeChartsListInFragment(BusinessActivityList businessActivityList) {
+    private void filterData(BusinessActivityList businessActivityList) {
         //refresh display
         businessActivityList.getBusinessActivityListDisplayFilteredSorted(filterManager);
-        ArrayList<MyPieChart> chartsList = new ArrayList<>();
-        chartsList.add(new MyPieChart("Incomes VS Expenses", MyPieChartTypes.EXPENSES_VS_INCOMES, businessActivityList));
-        chartsList.add(new MyPieChart("Expenses types", MyPieChartTypes.EXPENSE_TYPES, businessActivityList));
-        chartsList.add(new MyPieChart("Incomes types", MyPieChartTypes.INCOME_TYPES, businessActivityList));
-        chartsFragment.setChartsList(chartsList);
+        Log.d("filterData: ", businessActivityList.getBusinessActivityListDisplay().toString());
     }
 
     private void getDataFromDB(GetDataFromDB callback) {
@@ -118,28 +117,31 @@ public class ChartsActivity extends AppCompatActivity implements CloseFilterCall
             @Override
             public void onFailure(Exception e) {
                 // Handle failure case
-                dialogUtils.showDialog(ChartsActivity.this, "Display Error", "Something went wrong, try again later.", null);
+                dialogUtils.showDialog(AiActivity.this, "Display Error", "Something went wrong, try again later.", null);
             }
         }, callback);
     }
 
     private void displayOptions() {
-        charts_buttons_container.setVisibility(View.GONE);
-        charts_FRAME_filter.setVisibility(View.VISIBLE);
+        ai_buttons_container.setVisibility(View.GONE);
+        ai_FRAME_filter.setVisibility(View.VISIBLE);
     }
 
     private void findViews() {
         //fragments
-        charts_FRAME_nav = findViewById(R.id.charts_FRAME_nav);
-        charts_FRAME_filter = findViewById(R.id.charts_FRAME_filter);
-        charts_FRAME_charts_list = findViewById(R.id.charts_FRAME_charts_list);
-
-        //buttons part
-        charts_btn_display_options = findViewById(R.id.charts_btn_display_options);
+        ai_FRAME_nav = findViewById(R.id.ai_FRAME_nav);
+        ai_FRAME_filter = findViewById(R.id.ai_FRAME_filter);
 
 
-        charts_buttons_container = findViewById(R.id.charts_buttons_container);
+        //filter part
+        ai_btn_display_options = findViewById(R.id.ai_btn_display_options);
+        ai_buttons_container = findViewById(R.id.ai_buttons_container);
 
+        //ai part
+        ai_ai_container = findViewById(R.id.ai_ai_container);
+        ai_description_tv = findViewById(R.id.ai_description_tv);
+        ai_btn_ask = findViewById(R.id.ai_btn_ask);
+        ai_response_tv = findViewById(R.id.ai_response_tv);
     }
 
     private void startInitFilterManager() {
@@ -150,7 +152,6 @@ public class ChartsActivity extends AppCompatActivity implements CloseFilterCall
                 .setBusinessActivityType(BusinessActivityType.BOTH)
                 .setSortOption(SortOptions.DATE_LOW_TO_HIGH);
     }
-
 
     @Override
     public void onButtonClickedClose() {
@@ -172,11 +173,11 @@ public class ChartsActivity extends AppCompatActivity implements CloseFilterCall
                 .setBusinessActivityType(businessActivityType)
                 .setSortOption(sortOption);
         //doing with the data what i need
-        changeChartsListInFragment(businessActivityList);
+        filterData(businessActivityList);
     }
 
     private void closeFilterFrag() {
-        charts_buttons_container.setVisibility(View.VISIBLE);
-        charts_FRAME_filter.setVisibility(View.GONE);
+        ai_buttons_container.setVisibility(View.VISIBLE);
+        ai_FRAME_filter.setVisibility(View.GONE);
     }
 }

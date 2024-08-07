@@ -16,6 +16,9 @@
         android:theme="@style/Theme.Android_final_project"
         tools:targetApi="31">
         <activity
+            android:name=".Activities.AiActivity"
+            android:exported="false" />
+        <activity
             android:name=".Activities.ChartsActivity"
             android:exported="false" />
         <activity

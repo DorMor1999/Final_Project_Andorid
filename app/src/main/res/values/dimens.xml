@@ -29,4 +29,5 @@
     <dimen name="price_card_text_size">16sp</dimen>
     <dimen name="padding_16_def">16dp</dimen>
     <dimen name="error_text_size_filterFragment">14sp</dimen>
+    <dimen name="margin_inside_ai_container">8dp</dimen>
 </resources>
