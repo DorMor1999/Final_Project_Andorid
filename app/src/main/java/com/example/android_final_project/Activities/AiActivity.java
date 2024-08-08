@@ -117,10 +117,10 @@ public class AiActivity extends AppCompatActivity implements CloseFilterCallback
             return;
         }
 
-        // Construct your message with the question and include the data
-        String userMessage = "Given the following financial data, what recommendations can you give to economize and reduce unnecessary expenses?";
 
-        // Pass both userMessage and financialData to the GroqApiClient
+        String userMessage = "Given the following financial data (not to be considered as a specific currency), what recommendations can you give to economize and reduce unnecessary expenses?";
+
+
         groqApiClient.chatCompletion(userMessage, financialData, new GroqApiClient.ChatCompletionCallback() {
             @Override
             public void onResponse(String response) {
