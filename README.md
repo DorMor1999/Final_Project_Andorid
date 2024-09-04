@@ -25,3 +25,8 @@ The Budget Manager application is designed to help users efficiently manage thei
 
 - **Data Management:** Integrated with Firebase for real-time data base and management.
 - **Authentication:** User authentication handled through Firebase.
+
+## Demo
+
+https://github.com/user-attachments/assets/1b6b6900-d26c-4eb0-8517-716950c933bd
+
